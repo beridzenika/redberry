@@ -1,0 +1,46 @@
+@import url('https://googleapis.com');
+
+:root {
+    --gray50: #fff;
+    --gray100: #f5f5f5;
+    --gray200: #d1d1d1;
+    --gray600: #525252;
+    
+    --purple50: #eeedfc;
+    --purple300: #958fef;
+    --purple500: #4f46e5;
+
+    --warning: #f4a316;
+    --success: #1dc31d;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+body {
+    background: var(--gray100);
+}
+
+.container {
+    width: 1566px;
+}
+
+.btn-primary {
+    background: var(--purple500);
+    border: none;
+    border-radius: 8px;
+    padding: 17px 25px;
+    color: var(--gray50);
+    font-size: 20px;
+}
+.btn-secondary {
+    background: none;
+    border: solid 2px var(--purple300);
+    border-radius: 8px;
+    padding: 15px 23px;
+    color: var(--purple500);
+    font-size: 20px;
+}
