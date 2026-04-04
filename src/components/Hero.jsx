@@ -7,6 +7,23 @@ import { useState, useEffect, useRef } from 'react';
 function Hero() {
 
   const [current, setCurrent] = useState(0);
+  const timeRef = useRef(null);
+
+  const startTimer = () => {
+    clearInterval(timeRef.current);
+    timeRef.current = setInterval(() => {
+      setCurrent(prev => (prev+1)% slides.length);
+    }, 4000);
+  }
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timeRef.current);
+  }, []);
+
+  const go = (dir) => {
+    startTimer();
+    setCurrent(prev => (prev + dir + slides.length) % slides.length);
+  };
 
   const slides = [
     { id: 1, 
@@ -26,11 +43,6 @@ function Hero() {
     },
   ];
 
-  const go = (dir) => {
-    // startTimer();
-    setCurrent(prev => (prev + dir + slides.length) % slides.length);
-  };
-
   return (
     <div className='hero'>
       <div className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
@@ -48,7 +60,7 @@ function Hero() {
             <div className='carusel-nav'>
               <div className='slide-pagination'>
                 {slides.map((_, index) => (
-                  <span className={`${i==index ? 'active' : ''}`} />
+                  <span className={`${i===index ? 'active' : ''}`} />
                 ))}
               </div>
               <div className='arrow-box'>
@@ -61,8 +73,8 @@ function Hero() {
                   <ArrowR 
                     width={54} 
                     height={54} 
-                    className={i == slides.length-1 ? 'inactive' : ''}
-                    onClick={i == slides.length-1 ? undefined : () => go(1)}
+                    className={i === slides.length-1 ? 'inactive' : ''}
+                    onClick={i === slides.length-1 ? undefined : () => go(1)}
                   />
               </div>
             </div>
