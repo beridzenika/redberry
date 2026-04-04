@@ -9,13 +9,13 @@ function Header() {
     const isActive = false;
     return (
         <header className="header-navbar">
-            <div className='container'>
+            <div className='container header-menu'>
                 <a className="logo-holder">
                     <Logo width={30} height={30} />
                 </a>
 
-                <nav>
-                    <ul>
+                <nav className='header-nav'>
+                    <ul className='header-ul'>
                         <li className='nav-item'>
                             <Browse/>
                             <span>Browse Curses</span>
