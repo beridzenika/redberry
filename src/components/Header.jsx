@@ -1,11 +1,11 @@
-import { ReactComponent as Logo } from '../assets/Logo.svg';
-import { ReactComponent as Browse } from '../assets/Browse.svg';
-import { ReactComponent as Enroll } from '../assets/Enroll.svg';
-import { ReactComponent as User } from '../assets/User.svg';
+import { ReactComponent as Logo } from '../assets/icons/Logo.svg';
+import { ReactComponent as Browse } from '../assets/icons/Browse.svg';
+import { ReactComponent as Enroll } from '../assets/icons/Enroll.svg';
+import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Header.css'
 
 function Header() {
-    const isLoggedIn = false;
+    const isLoggedIn = true;
     const isActive = false;
     return (
         <header className="header-navbar">
