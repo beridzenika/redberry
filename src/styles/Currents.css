@@ -1,0 +1,10 @@
+h2 {
+    font-weight: 600;
+    font-size: 40px;
+    color: var(--gray950);
+}
+.subtitle {
+    font-weight: 500;
+    size: 18px;
+    color: var(--gray700);
+}

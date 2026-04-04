@@ -44,7 +44,7 @@ function Hero() {
   ];
 
   return (
-    <div className='hero'>
+    <section className='hero'>
       <div className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
       {slides.map((slide, i) => (
         <div key={slide.id} className='hero-slide' style = {{ backgroundImage: `url(${slide.image})` }}>
@@ -81,7 +81,7 @@ function Hero() {
         </div>
       ))}
       </div>
-    </div>
+    </section>
   )
 }
 

@@ -59,9 +59,9 @@ function Footer() {
                 </nav>
             </div>
             <div className='footer-row'>
-                <p className='legit'>
+                <small className='legit'>
                     Copyright © 2026 Redberry International
-                </p>
+                </small>
                 <span className='legit'>
                     All Rights Reserved | 
                     <a href="#"> Terms and Conditions </a>| 

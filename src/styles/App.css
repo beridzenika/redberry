@@ -6,6 +6,8 @@
     --gray200: #d1d1d1;
     --gray500: #666666;
     --gray600: #525252;
+    --gray950: #3d3d3d;
+    --gray950: #0A0A0A;
     
     --purple50: #eeedfc;
     --purple300: #958fef;
@@ -36,6 +38,9 @@ body {
 .container {
     width: 1566px;
     margin: auto;
+}
+section {
+    margin: 60px auto;
 }
 
 .logo-holder {
