@@ -1,4 +1,4 @@
-@import url('https://googleapis.com');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
     --gray50: #fff;
@@ -18,7 +18,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
 }
 body {
     background: var(--gray100);
@@ -26,6 +26,7 @@ body {
 
 .container {
     width: 1566px;
+    margin: auto;
 }
 
 .btn-primary {
@@ -35,6 +36,7 @@ body {
     padding: 17px 25px;
     color: var(--gray50);
     font-size: 20px;
+    font-weight: 500;
 }
 .btn-secondary {
     background: none;
@@ -43,4 +45,5 @@ body {
     padding: 15px 23px;
     color: var(--purple500);
     font-size: 20px;
+    font-weight: 500;
 }
