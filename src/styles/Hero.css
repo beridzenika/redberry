@@ -3,6 +3,7 @@
     position:  relative;
     width: 100%;
     overflow: hidden;
+    border-radius: 30px;
 }
 .hero-track {
   display: flex;

@@ -4,9 +4,7 @@ import { ReactComponent as Enroll } from '../assets/icons/Enroll.svg';
 import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Header.css'
 
-function Header() {
-    const isLoggedIn = true;
-    const isActive = false;
+function Header( {isLoggedIn, isActive} ) {
     return (
         <header className="header-navbar">
             <div className='container header-menu'>

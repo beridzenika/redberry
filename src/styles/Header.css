@@ -24,7 +24,6 @@
     align-items: center;
     gap: 8px;
     color: var(--gray600);
-    font-weight: 500;
     font-size: 20px;
     padding: 15px;
 }

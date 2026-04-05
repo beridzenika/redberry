@@ -4,12 +4,16 @@
     --gray50: #fff;
     --gray100: #f5f5f5;
     --gray200: #d1d1d1;
+    --gray400: #8a8a8a;
     --gray500: #666666;
     --gray600: #525252;
-    --gray950: #3d3d3d;
+    --gray700: #3d3d3d;
+    --gray900: #141414;
     --gray950: #0A0A0A;
     
     --purple50: #eeedfc;
+    --purple100: #DDDBFA;
+    --purple200: #b7b3f4;
     --purple300: #958fef;
     --purple500: #4f46e5;
     --purple800: #130E67;
@@ -23,6 +27,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
+    font-weight: 500;
 }
 
 .App {
@@ -57,7 +62,6 @@ section {
     padding: 17px 25px;
     color: var(--gray50);
     font-size: 20px;
-    font-weight: 500;
 }
 .btn-secondary {
     background: none;
@@ -66,5 +70,4 @@ section {
     padding: 15px 23px;
     color: var(--purple500);
     font-size: 20px;
-    font-weight: 500;
 }

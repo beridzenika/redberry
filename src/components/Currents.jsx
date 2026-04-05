@@ -9,59 +9,39 @@ function Currents() {
     <section>
         <div className="header-box">
             <header className="section-header">
-                <h2>Continue Learning</h2>
-                <span className="subtitle">
+                <h2 className='courses-title'>Continue Learning</h2>
+                <span className="courses-subtitle">
                     Pick up where you left
                 </span>
             </header>
-            <a href="#">See All</a>    
+            <a href="#" className='courses-more-link'>See All</a>    
         </div>
         <div className="card-holder">
-            <article className='current-cards'>
-                <img src="" alt=""/>
-                <header>
-                    <div className="lecturer">Lecturer <span>Marilyn Mango</span></div>
-                    <span className="star-grade"><Star/>4.9</span>
-                </header>
-                <h3>Advanced React & TypeScript Development </h3>
-                <div className='percentage'>
-                    <span className='title'>65% Complete</span>
-                    <span className='bar'/>
-                    <span className='full'/>
+            <article className='course-card'>
+                <div className='course-main'>
+                    <img src={require('../assets/imgs/current.png')} alt="curse image" className='course-img'/>
+                    <div className="course-info">
+                        <div className="course-meta">
+                            <span className="course-lecturer">Lecturer Marilyn Mango</span>
+                            <span className="course-rating"><Star/><span>4.9</span></span>
+                        </div>
+                        <h3 className='course-title'>Advanced React & TypeScript Development</h3>
+                    </div>
                 </div>
-                <button className='btn-secondary'>View</button>
-            </article>
-            <article className='current-cards'>
-                <img src="" alt=""/>
-                <header>
-                    <div className="lecturer">Lecturer <span>Marilyn Mango</span></div>
-                    <span className="star-grade"><Star/>4.9</span>
-                </header>
-                <h3>Advanced React & TypeScript Development </h3>
-                <div className='percentage'>
-                    <span className='title'>65% Complete</span>
-                    <span className='bar'/>
-                    <span className='full'/>
+                <div className='course-footer'>
+                    <div className='curse-progress'>
+                        <span>65% Complete</span>
+                        <div className="progress-bar">
+                            <div className="progress-fill" style={{ width: `65%` }} />
+                        </div>
+                    </div>
+                    <button className='btn-secondary'>View</button>
                 </div>
-                <button className='btn-secondary'>View</button>
             </article>
-            <article className='current-cards'>
-                <img src="" alt=""/>
-                <header>
-                    <div className="lecturer">Lecturer <span>Marilyn Mango</span></div>
-                    <span className="star-grade"><Star/>4.9</span>
-                </header>
-                <h3>Advanced React & TypeScript Development </h3>
-                <div className='percentage'>
-                    <span className='title'>65% Complete</span>
-                    <span className='bar'/>
-                    <span className='full'/>
-                </div>
-                <button className='btn-secondary'>View</button>
-            </article>
+            
         </div>
     </section>
   )
-}
+};
 
-export default Currents
+export default Currents;

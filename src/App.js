@@ -7,9 +7,11 @@ import Dashboard from "./pages/Dashboard";
 import './styles/App.css';
 
 function App() {
+  const isLoggedIn = false;
+  const isActive = false;
   return (
     <div className="App">
-      <Header/>
+      <Header isLoggedIn={isLoggedIn} isActive={isActive}/>
       <Dashboard/>
       <Footer/>
     </div>
