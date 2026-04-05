@@ -16,6 +16,7 @@
     --purple200: #b7b3f4;
     --purple300: #958fef;
     --purple500: #4f46e5;
+    --purple600: #281ED2;
     --purple800: #130E67;
 
     --warning: #f4a316;
@@ -63,6 +64,9 @@ section {
     color: var(--gray50);
     font-size: 20px;
 }
+.btn-primary:hover {
+    background: var(--purple600);
+}
 .btn-secondary {
     background: none;
     border: solid 2px var(--purple300);
@@ -70,4 +74,9 @@ section {
     padding: 15px 23px;
     color: var(--purple500);
     font-size: 20px;
+}
+.btn-secondary:hover {
+    background: var(--purple600);
+    border-color: var(--purple600);
+    color: var(--gray50);
 }

@@ -84,3 +84,6 @@
     border-radius: 30px;
     background: var(--purple500);
 }
+.course-footer .btn-secondary {
+    padding: 10px 20px;
+}
