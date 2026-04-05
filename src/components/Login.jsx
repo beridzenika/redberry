@@ -8,6 +8,7 @@ import { loginUser } from '../services/api';
 function LogIn({ onSuccess }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+     const [isVisible, setIsVisible] = useState(false);
 
     const [error, setError] = useState(null);
 
@@ -39,32 +40,42 @@ function LogIn({ onSuccess }) {
     return (
     <div className='modal-backdrop'>
         <div className="modal">
-            <button><Close/></button>
+            <button className='close-btn'><Close/></button>
             <div className='modal-content'>
-                <h2 className='modal-title'>Welcome Back</h2>
-                <span className='modal-subtitle'>Log in to continue your Learning</span>
+                <div className='modal-header'>
+                    <h2 className='modal-title'>Welcome Back</h2>
+                    <span className='subtitle'>Log in to continue your Learning</span>
+                </div>
                 <form onSubmit={handleSubmit}>
-                    <label>Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
                         type="email"
-                        placeholder="Email"
+                        placeholder="you@example.com"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         required
                     />
-                    <label>Password</label>
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
-                        required
-                    />
+                    <label htmlFor="password">Password</label>
+                    <span className='input-wrapper'>
+                        <input
+                            type={isVisible ? "password" : "text"}
+                            placeholder="••••••••"
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            requireds
+                        />
+                        <PassEye 
+                            className='password-icon' 
+                            onClick={() => setIsVisible(prev => !prev)}
+                        />
+                    </span>
                     <button className='btn-primary'>Log In</button>
                 </form>
-                <span>or</span>
+                <div className='modal-line'>
+                    <span>or</span>
+                </div>
                 <div className='modal-footer'>
-                    <span>Don't have an account?</span>
+                    <span>Don't have an account? </span>
                     <a>Sign Up</a>
                 </div>
             </div>

@@ -18,9 +18,8 @@ footer {
     padding: 11px 13px !important;
     border-radius: 10px !important;
 }
-.subtitle {
+.menu .subtitle {
     padding: 16px 0 24px;
-    font-size: 14px;
     color: var(--purple800);
 }
 .social-medias {
