@@ -8,7 +8,7 @@ import { loginUser } from '../services/api';
 function LogIn({ onSuccess }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-     const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
     const [error, setError] = useState(null);
 

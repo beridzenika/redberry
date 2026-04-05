@@ -51,21 +51,6 @@ p {
     position: relative;
 }
 
-.slide-pagination {
-    display: flex;
-    justify-content: center;
-    gap: 12px;
-}
-.slide-pagination span{
-    display: inline-block;
-    width: 57px;
-    height: 8px;
-    border-radius: 8px;
-    background-color: #C1BCBC80;
-}
-.slide-pagination .active{
-    background-color: var(--gray100);
-}
 .arrow-box {
     position: absolute;
     right: 0;

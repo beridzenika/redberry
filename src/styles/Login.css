@@ -14,13 +14,15 @@
     padding: 50px;
     position: relative;
 }
-.close-btn {
+.close-btn, .back-btn {
     position: absolute;
-    right: 20px;
     top: 30px;
     background: none;
     border: none;
 }
+.close-btn { right: 20px; }
+.back-btn { left: 20px; }
+
 .modal-header {
     text-align: center;
 }
@@ -32,13 +34,22 @@
 .modal .subtitle {
     color: var(--gray500);
 }
+
+.modal .pagination {
+    margin: 24px 0;
+    width: 100%;
+}
+.modal .pagination span { background: var(--purple50); }
+.modal .pagination .current { background: var(--purple200); }
+.modal .pagination .complete { background: var(--purple500); }
+
 label {
     font-size: 14px;
     color: var(--gray700);
     margin: 24px 0 5px;
     display: block;
 }
-input {
+input, .upload-input {
     width: 100%;
     border-radius: 8px;
     border: 1.5px solid var(--gray200);
@@ -54,9 +65,47 @@ input {
 }
 
 
+.upload-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+.upload-input {
+    text-align: center;
+    cursor: pointer;
+    padding: 30px 0;
+}
+.upload-input:hover {
+    border-color: var(--purple100);
+    background: var(--purple50);
+}
+.upload-input input {
+    display: none;
+}
+
+.drag-text {
+    font-size: 14px;
+    color: var(--gray500);
+}
+
+.upload-link {
+    font-size: 14px;
+    color: var(--purple600);
+    text-decoration: underline;
+}
+
+.file-types {
+    font-size: 12px;
+    color: var(--gray300);
+    margin-top: 6px;
+}
+
+
+
 .modal .btn-primary {
     margin-top: 16px;
     width: 100%;
+    padding: 10px;
 }
 .modal-line {
     background: var(--gray200);

@@ -58,7 +58,7 @@ function Hero() {
               <button className='btn-primary'>Browse Curses</button>
             </div>
             <div className='carusel-nav'>
-              <div className='slide-pagination'>
+              <div className='pagination'>
                 {slides.map((_, index) => (
                   <span className={`${i===index ? 'active' : ''}`} />
                 ))}
