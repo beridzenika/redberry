@@ -22,23 +22,26 @@ function App() {
     setShowLogin(false);
     setShowSignin(false);
   };
-  
+
   return (
     <div className="App">
       <Header 
-        user
+        user={user}
         onLoginClick={() => setShowLogin(true)}
         onSigninClick={() => setShowSignin(true)}
       />
       {showLogin && (
         <Login
           onSuccess={handleLoginSuccess}
+          onClose={() => setShowLogin(false)}
+          onSigninClick={() => setShowSignin(true)}
         />
       )}
       {showSignin && (
         <Registration
           onSuccess={handleLoginSuccess}
           onClose={() => setShowSignin(false)}
+          onLoginClick={() => setShowLogin(true)}
         />
       )}
 

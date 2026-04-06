@@ -64,6 +64,19 @@ input, .upload-input {
     top: calc(50% - 8px);
 }
 
+.label-error, .input-error, .field-error {
+    color: var(--error);
+}
+.input-error {
+    border-color: var(--error);
+}
+.field-error {
+    font-size: 12px;
+    font-weight: 400px;
+}
+.icon-error * {
+    stroke: var(--error) !important;
+}
 
 .upload-container {
     display: flex;
@@ -75,9 +88,13 @@ input, .upload-input {
     cursor: pointer;
     padding: 30px 0;
 }
-.upload-input:hover {
+.upload-input:hover .upload-input-preview {
     border-color: var(--purple100);
     background: var(--purple50);
+}
+.upload-dragging {
+    border-color: var(--purple200);
+    background: var(--purple100);
 }
 .upload-input input {
     display: none;
@@ -100,6 +117,33 @@ input, .upload-input {
     margin-top: 6px;
 }
 
+.preview-content {
+    padding: 0 60px;
+    display: grid;
+    grid-template-columns: 54px 1fr;
+    text-align: left;
+    gap: 10px;
+    align-items: center;
+}
+.preview-image {
+    width: 54px;
+    height: 54px;
+    border-radius: 40px;
+}
+.preview-title {
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--gray600);
+}
+.preview-size {
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--gray300);
+}
+.preview-content .upload-link {
+    font-size: 10px;
+    color: var(--purple500);
+}
 
 
 .modal .btn-primary {
@@ -130,7 +174,9 @@ input, .upload-input {
     font-size: 12px;
     color: var(--gray500);
 }
-.modal-footer a {
+.modal-footer button {
+    background: none;
+    border: none;
     font-size: 14px;
     color: var(--gray900);
     text-decoration: underline;

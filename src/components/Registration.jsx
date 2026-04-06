@@ -5,127 +5,216 @@ import { ReactComponent as ClosedEye } from '../assets/icons/ClosedEye.svg';
 import { ReactComponent as Upload } from '../assets/icons/Upload.svg';
 import '../styles/Login.css'
 
-import { use, useState } from 'react';
+import { useState } from 'react';
 import { registerUser } from '../services/api';
 
 
-function Step1({ values, onChange, error, onNext }) {
+function Step1({ values, onChange, error, setError, clearFieldError, onNext }) {
+    const newErrors = {};
+
     const handleNext = () => {
-        if (values.email.length < 3 || !values.email.includes('@')) {
-            error.set('Enter a valid email');
+        if (values.email.length < 3) {
+            newErrors.email = 'Email is too short';
+        } else if (!values.email.includes('@')) {
+            newErrors.email = 'Enter a valid email';
+        }
+        if (Object.keys(newErrors).length > 0) {
+            setError(newErrors);
             return;
         }
-        error.set(null);
+        setError({});
         onNext();
     };
 
   return (
     <>
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" className={error.email ? 'label-error' : ''}>
+            Email
+        </label>
         <input
             id='email'
             type='email'
             placeholder='you@example.com'
             value={values.email}
-            onChange={e => onChange('email', e.target.value)}
+            className={error.email ? 'input-error' : ''}
+            onChange={e => {
+                onChange('email', e.target.value);
+                if (error.email) clearFieldError('email');
+            }}
         />
+        {error.email && <span className="field-error">{error.email}</span>}
         <button type='button' className='btn-primary' onClick={handleNext}>Next</button>
     </>
   );
 }
 
-function Step2({ values, onChange, error, onNext }) {
+function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) {
+    const newErrors = {};
     const handleNext = () => {
         if (values.password.length < 3) {
-            error.set('Password must be at least 3 characters');
-            return;
+            newErrors.password = 'Password must be at least 3 characters';
         }
         if (values.password !== values.password_confirmation) {
-            error.set('Passwords do not match');
+            newErrors.password_confirmation = 'Passwords do not match';
+        }
+        if (Object.keys(newErrors).length > 0) {
+            setError(newErrors);
             return;
         }
-        error.set(null);
+        setError({});
         onNext();
     };
     const [isVisible, setIsVisible] = useState(false);
 
   return (
     <>
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className={error.password ? 'label-error' : ''}>
+            Password
+        </label>
         <span className='input-wrapper'>
             <input
                 id='password'
                 type={isVisible ? 'password' : 'text'}
                 placeholder='••••••••'
                 value={values.password}
-                onChange={e => onChange('password', e.target.value)}
+                className={error.password ? 'input-error' : ''}
+                onChange={e => {
+                    onChange('password', e.target.value);
+                    if (error.password) clearFieldError('password');
+                }}
             />
+            {isVisible ? (
+            <ClosedEye height={20}
+                className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                onClick={() => setIsVisible(false)}
+            />
+            ) : (
             <PassEye 
-                className='password-icon' 
-                onClick={() => setIsVisible(prev => !prev)}
+                className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                onClick={() => setIsVisible(true)}
             />
+            )}
         </span>
+        {error.password && <span className="field-error">{error.password}</span>}
 
-        <label htmlFor="confirm">Confirm Password</label>
+        <label htmlFor="confirm" className={error.password_confirmation ? 'label-error' : ''}>
+            Confirm Password
+        </label>
         <span className='input-wrapper'>
             <input
                 id='confirm'
                 type='password'
                 placeholder='••••••••'
                 value={values.password_confirmation}
-                onChange={e => onChange('password_confirmation', e.target.value)}
+                className={error.password_confirmation ? 'input-error' : ''}
+                onChange={e => {
+                    onChange('password_confirmation', e.target.value);
+                    if (error.password) clearFieldError('password_confirmation');
+                }}
             />
-            <ClosedEye 
-                className='password-icon'
+            <ClosedEye height={20}
+                className={error.password_confirmation ? 'password-icon icon-error' : 'password-icon'}
             />
         </span>
+        {error.password_confirmation && <span className="field-error">{error.password_confirmation}</span>}
         <button type='button' className='btn-primary' onClick={handleNext}>Next</button>
     </>
   );
 }
 
-function Step3({ values, onChange, error }) {
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+function Step3({ values, onChange, error, setError, clearFieldError }) {
+    
+    const processFile = (file) => {
         if (!file) return;
-        const allowed = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp'];
+        
+        const allowed = ['image/jpg', 'image/png', 'image/webp'];
         if (!allowed.includes(file.type)) {
-            error.set('Avatar must be jpg, jpeg, png or webp');
+            setError(prev => ({ ...prev, avatar: 'Must be jpg, png or webp' }));
             return;
         }
-        error.set(null);
+        clearFieldError('avatar');
         onChange('avatar', file);
+    }
+    
+    const handleFileChange = (e) => {
+        processFile(e.target.files[0]);
+    };
+    
+    const [isDragging, setIsDragging] = useState(false);
+    const handleDrop = (e) => {
+        e.preventDefault();
+        setIsDragging(false);
+
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            handleFileChange({ target: { files: [file] } });
+        }
+    };
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        setIsDragging(true);
+    };
+    const handleDragLeave = () => {
+        setIsDragging(false);
     };
 
   return (
     <>
-        <label htmlFor='username'>Username</label>
+        <label htmlFor='username' className={error.username ? 'label-error' : ''}>
+            Username
+        </label>
         <input
             id='username'
             type='text'
             placeholder='username'
             value={values.username}
-            onChange={e => onChange('username', e.target.value)}
+            className={error.username ? 'input-error' : ''}
+            onChange={e => {
+                onChange('username', e.target.value);
+                if (error.username) clearFieldError('username');
+            }}
         />
+        {error.username && <span className="field-error">{error.username}</span>}
+        
         <label htmlFor='avatar'>Upload Avatar</label>
-        <label htmlFor='avatar' className='upload-input'>
+        <label 
+            htmlFor='avatar' 
+            className={`upload-input ${error.avatar ? "input-error" : ""} ${isDragging ? "upload-dragging" : ""}`}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            onDragLeave={handleDragLeave}
+        >
             <input
             id='avatar'
             type='file'
             accept='.jpg,.jpeg,.png,.webp'
             onChange={handleFileChange}
             />
-            <div className='upload-content'>
-            <Upload className='icon'/>
-            <p>
-                <span className="drag-text">Drag and drop or </span>
-                <span className="upload-link">Upload File</span>
-            </p>
-            <p className="file-types">
-                JPG, PNG or WebP
-            </p>
+            {values.avatar ? (
+            <div className='preview-content'>
+                <img src={URL.createObjectURL(values.avatar)} alt="preview" className="preview-image"/>
+                <div className='preview-text'>
+                    <p className='preview-title'>{values.avatar.name}</p>
+                    <p className='preview-size'>
+                        Size - {(values.avatar.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
+                    <span className="upload-link">Change</span>
+                </div>
             </div>
+            ) : (
+            <div className='upload-content'>
+                <Upload className='icon'/>
+                <p>
+                    <span className="drag-text">Drag and drop or </span>
+                    <span className="upload-link">Upload File</span>
+                </p>
+                <p className="file-types">
+                    JPG, PNG or WebP
+                </p>
+            </div>
+            )}
         </label>
+        {error.avatar && <span className="field-error">{error.avatar}</span>}
         <button type='submit' className='btn-primary'>Sign Up</button>
 
     </>
@@ -133,9 +222,13 @@ function Step3({ values, onChange, error }) {
 }
 
 
-function Registration({ onSuccess, onClose }) {
+function Registration({ onSuccess, onClose, onLoginClick }) {
     const [step, setStep] = useState(1);
-    const [error, setError] = useState(null);
+    
+    const [error, setError] = useState({});
+    const clearFieldError = (field) => {
+        setError(prev => ({ ...prev, [field]: undefined }));
+    };
 
     const [values, setValues] = useState({
         email: '',
@@ -152,27 +245,36 @@ function Registration({ onSuccess, onClose }) {
         setStep(prev => prev + 1);
     };
     const goBack = () => {
-        setError(null);
+        setError({});
         setStep(prev => prev - 1);
     };
 
     const handleSubmit = async (e) => {
+        const newErrors = {};
         e.preventDefault();
-        setError(null);
+        setError({});
 
         if (values.username.length < 3) {
-            setError('Username must be at least 3 characters');
+            newErrors.username = 'Username must be at least 3 characters';
+            setError(newErrors);
             return;
         }
+
         try {
             const data = await registerUser(values);
             onSuccess(data.data.user, data.data.token);
         } catch (err) {
-            setError(err.message || 'Something went wrong');
+            if (err.errors) {
+                const mapped = {};
+                Object.keys(err.errors).forEach(field => {
+                    mapped[field] = err.errors[field][0];
+                });
+            setError(mapped);
+            } else {
+                setError({ general: err.message || 'Something went wrong' });
+            }
         }
     };
-
-    const errorHelper = { set: setError };
 
     return (
     <div className='modal-backdrop'>
@@ -198,7 +300,9 @@ function Registration({ onSuccess, onClose }) {
                     <Step1
                         values={values}
                         onChange={updateField}
-                        error={errorHelper}
+                        error={error}
+                        setError={setError}
+                        clearFieldError={clearFieldError}
                         onNext={goNext}
                     />
                     )}
@@ -206,7 +310,9 @@ function Registration({ onSuccess, onClose }) {
                     <Step2
                         values={values}
                         onChange={updateField}
-                        error={errorHelper}
+                        error={error}
+                        setError={setError}
+                        clearFieldError={clearFieldError}
                         onNext={goNext}
                     />
                     )}
@@ -214,17 +320,20 @@ function Registration({ onSuccess, onClose }) {
                     <Step3
                         values={values}
                         onChange={updateField}
-                        error={errorHelper}
+                        error={error}
+                        setError={setError}
+                        clearFieldError={clearFieldError}
                     />
                     )}
-                    
+
+                    {error.general && <p className="modal-error">{error.general}</p>}
                 </form>
                 <div className='modal-line'>
                     <span>or</span>
                 </div>
                 <div className='modal-footer'>
                     <span>Already have an account? </span>
-                    <a>Log In</a>
+                    <button onClick={() => { onLoginClick(); onClose(); }}>Log In</button>
                 </div>
             </div>
         </div>

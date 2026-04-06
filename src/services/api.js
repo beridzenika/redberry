@@ -13,7 +13,6 @@ export const loginUser = async (email, password) => {
   if (!res.ok) {
     throw new Error(data.message || 'Login failed');
   }
-  console.log(data);
   return data;
 };
 
@@ -40,6 +39,5 @@ export const registerUser = async ({ email, password, password_confirmation, use
   if (!res.ok) {
     throw { message: data.message, errors: data.errors };
   }
-  console.log(data);
   return data;
 };

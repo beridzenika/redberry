@@ -5,7 +5,7 @@ import '../styles/Login.css'
 import { useState } from 'react';
 import { loginUser } from '../services/api';
 
-function LogIn({ onSuccess }) {
+function LogIn({ onSuccess, onClose, onSigninClick }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isVisible, setIsVisible] = useState(false);
@@ -40,7 +40,7 @@ function LogIn({ onSuccess }) {
     return (
     <div className='modal-backdrop'>
         <div className="modal">
-            <button className='close-btn'><Close/></button>
+            <button className='close-btn' onClick={onClose}><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>
                     <h2 className='modal-title'>Welcome Back</h2>
@@ -76,7 +76,7 @@ function LogIn({ onSuccess }) {
                 </div>
                 <div className='modal-footer'>
                     <span>Don't have an account? </span>
-                    <a>Sign Up</a>
+                    <button onClick={() => { onSigninClick(); onClose(); }}>Sign Up</button>
                 </div>
             </div>
         </div>
