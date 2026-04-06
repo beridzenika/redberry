@@ -2,16 +2,18 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
+import Profile from "./components/Profile";
 import Registration from "./components/Registration";
 import Dashboard from "./pages/Dashboard";
 
 import './styles/App.css';
 
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignin, setShowSignin] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   
@@ -29,7 +31,14 @@ function App() {
         user={user}
         onLoginClick={() => setShowLogin(true)}
         onSigninClick={() => setShowSignin(true)}
+        onProfileClick={() => setShowProfile(true)}
       />
+      {showProfile && (
+        <Profile
+          user={user}
+          onClose={() => setShowLogin(false)}
+        />
+      )}
       {showLogin && (
         <Login
           onSuccess={handleLoginSuccess}

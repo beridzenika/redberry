@@ -63,6 +63,35 @@ section {
     border-radius: 15px;
 }
 
+/* avatar holder */
+.avatar {
+    height: 56px;
+    position: relative;
+    background: var(--purple50);
+    padding: 9px;
+    width: 56px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border-color 0.6s linear;
+}
+.avatar:hover{
+    border-color: var(--purple300);
+}
+.avatar .status {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--warning);
+  border: 2px solid var(--gray50);
+}
+
+.avatar .status.complete {
+  background: var(--success);
+}
+
 /* buttons */
 .btn-primary {
     background: var(--purple500);

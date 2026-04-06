@@ -4,8 +4,7 @@ import { ReactComponent as Enroll } from '../assets/icons/Enroll.svg';
 import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Header.css'
 
-function Header( {user, onLoginClick, onSigninClick} ) {
-    console.log(user, user);
+function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
     return (
         <header className="header-navbar">
             <div className='container header-menu'>
@@ -27,9 +26,9 @@ function Header( {user, onLoginClick, onSigninClick} ) {
                         )}
                     </ul>
                     {user ? (
-                    <div className='avatar'>
+                    <div className='avatar' onClick={onProfileClick}>
                         <User width={38} height={38} />
-                        <span className={`status ${user ? 'active' : ''}`} />
+                        <span className={`status ${user.mobilenumber && user.age ? 'complete' : ''}`} />
                     </div>
                     ) : (
                     <>

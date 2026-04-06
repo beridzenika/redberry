@@ -1,5 +1,6 @@
 import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as PassEye } from '../assets/icons/PassEye.svg';
+import { ReactComponent as ClosedEye } from '../assets/icons/ClosedEye.svg';
 import '../styles/Login.css'
 
 import { useState } from 'react';
@@ -10,24 +11,38 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
     const [password, setPassword] = useState('');
     const [isVisible, setIsVisible] = useState(false);
 
-    const [error, setError] = useState(null);
+    const [error, setError] = useState({});
+
+    const clearFieldError = (field) => {
+        setError(prev => ({ ...prev, [field]: undefined }));
+    };
 
     const validate = () => {
-        if (email.length < 3) return 'Email too short';
-        if (!email.includes('@')) return 'Enter a valid email';
-        if (password.length < 3) return 'Password must be at least 3 characters';
-        return null;
+        const newErrors = {};
+
+        if (email.length < 3) {
+            newErrors.email = 'Email too short';
+        }
+        else if (!email.includes('@')) {
+            newErrors.email = 'Enter a valid email';
+        }
+        if (password.length < 3) {
+            newErrors.password = 'Password must be at least 3 characters';
+        }
+        if (Object.keys(newErrors).length > 0) {
+            setError(newErrors);
+            return false;
+        }
+        setError({});
+        return true;
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
 
-        const validationError = validate();
-        if (validationError) {
-        setError(validationError);
-        return;
-        }
+        const isValid = validate();
+        if (!isValid) return;
 
         try {
             const data = await loginUser(email, password);
@@ -47,28 +62,48 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                     <span className='subtitle'>Log in to continue your Learning</span>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="email">Email</label>
+                    <label htmlFor="email" className={error.email ? 'label-error' : ''}>
+                        Email
+                    </label>
                     <input
                         type="email"
                         placeholder="you@example.com"
                         value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        required
+                        className={error.email ? 'input-error' : ''}
+                        onChange={e => {
+                            setEmail(e.target.value);
+                            if (error.email) clearFieldError('email');
+                        }}
                     />
-                    <label htmlFor="password">Password</label>
+                    {error.email && <span className="field-error">{error.email}</span>}
+
+                    <label htmlFor="password" className={error.password ? 'label-error' : ''}>
+                        Password
+                    </label>
                     <span className='input-wrapper'>
                         <input
                             type={isVisible ? "password" : "text"}
                             placeholder="••••••••"
                             value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            requireds
+                            className={error.password ? 'input-error' : ''}
+                            onChange={e => {
+                                setPassword(e.target.value);
+                                if (error.password) clearFieldError('password');
+                            }}
                         />
+                        {isVisible ? (
+                        <ClosedEye height={20}
+                            className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                            onClick={() => setIsVisible(false)}
+                        />
+                        ) : (
                         <PassEye 
-                            className='password-icon' 
-                            onClick={() => setIsVisible(prev => !prev)}
+                            className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                            onClick={() => setIsVisible(true)}
                         />
+                        )}
                     </span>
+                    {error.password && <span className="field-error">{error.password}</span>}
                     <button className='btn-primary'>Log In</button>
                 </form>
                 <div className='modal-line'>

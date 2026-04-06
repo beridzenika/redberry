@@ -43,6 +43,26 @@
 .modal .pagination .current { background: var(--purple200); }
 .modal .pagination .complete { background: var(--purple500); }
 
+.profile-holder {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin-top: 24px;
+}
+.profile-title {
+    font-weight: 600;
+    font-size: 20px;
+    color: var(--gray950);
+}
+.profile-holder span {
+    font-weight: 400;
+    font-size: 10px;
+    color: var(--warning);
+}
+.profile-holder .complete {
+    color: var(--success);
+}
+
 label {
     font-size: 14px;
     color: var(--gray700);
