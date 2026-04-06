@@ -39,7 +39,7 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setError(null);
+        setError({});
 
         const isValid = validate();
         if (!isValid) return;
@@ -54,7 +54,7 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
 
     return (
     <div className='modal-backdrop'>
-        <div className="modal">
+        <div className='modal'>
             <button className='close-btn' onClick={onClose}><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>
@@ -62,12 +62,13 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                     <span className='subtitle'>Log in to continue your Learning</span>
                 </div>
                 <form onSubmit={handleSubmit}>
-                    <label htmlFor="email" className={error.email ? 'label-error' : ''}>
+                    <label htmlFor='email' className={error.email ? 'label-error' : ''}>
                         Email
                     </label>
                     <input
-                        type="email"
-                        placeholder="you@example.com"
+                        id='email'
+                        type='email'
+                        placeholder='you@example.com'
                         value={email}
                         className={error.email ? 'input-error' : ''}
                         onChange={e => {
@@ -75,15 +76,16 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                             if (error.email) clearFieldError('email');
                         }}
                     />
-                    {error.email && <span className="field-error">{error.email}</span>}
+                    {error.email && <span className='field-error'>{error.email}</span>}
 
-                    <label htmlFor="password" className={error.password ? 'label-error' : ''}>
+                    <label htmlFor='password' className={error.password ? 'label-error' : ''}>
                         Password
                     </label>
                     <span className='input-wrapper'>
                         <input
-                            type={isVisible ? "password" : "text"}
-                            placeholder="••••••••"
+                            id='password'
+                            type={isVisible ? 'password' : 'text'}
+                            placeholder='••••••••'
                             value={password}
                             className={error.password ? 'input-error' : ''}
                             onChange={e => {
@@ -103,7 +105,7 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                         />
                         )}
                     </span>
-                    {error.password && <span className="field-error">{error.password}</span>}
+                    {error.password && <span className='field-error'>{error.password}</span>}
                     <button className='btn-primary'>Log In</button>
                 </form>
                 <div className='modal-line'>

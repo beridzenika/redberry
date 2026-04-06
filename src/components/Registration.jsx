@@ -28,7 +28,7 @@ function Step1({ values, onChange, error, setError, clearFieldError, onNext }) {
 
   return (
     <>
-        <label htmlFor="email" className={error.email ? 'label-error' : ''}>
+        <label htmlFor='email' className={error.email ? 'label-error' : ''}>
             Email
         </label>
         <input
@@ -42,7 +42,7 @@ function Step1({ values, onChange, error, setError, clearFieldError, onNext }) {
                 if (error.email) clearFieldError('email');
             }}
         />
-        {error.email && <span className="field-error">{error.email}</span>}
+        {error.email && <span className='field-error'>{error.email}</span>}
         <button type='button' className='btn-primary' onClick={handleNext}>Next</button>
     </>
   );
@@ -68,7 +68,7 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
 
   return (
     <>
-        <label htmlFor="password" className={error.password ? 'label-error' : ''}>
+        <label htmlFor='password' className={error.password ? 'label-error' : ''}>
             Password
         </label>
         <span className='input-wrapper'>
@@ -95,9 +95,9 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
             />
             )}
         </span>
-        {error.password && <span className="field-error">{error.password}</span>}
+        {error.password && <span className='field-error'>{error.password}</span>}
 
-        <label htmlFor="confirm" className={error.password_confirmation ? 'label-error' : ''}>
+        <label htmlFor='confirm' className={error.password_confirmation ? 'label-error' : ''}>
             Confirm Password
         </label>
         <span className='input-wrapper'>
@@ -116,7 +116,7 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
                 className={error.password_confirmation ? 'password-icon icon-error' : 'password-icon'}
             />
         </span>
-        {error.password_confirmation && <span className="field-error">{error.password_confirmation}</span>}
+        {error.password_confirmation && <span className='field-error'>{error.password_confirmation}</span>}
         <button type='button' className='btn-primary' onClick={handleNext}>Next</button>
     </>
   );
@@ -174,12 +174,12 @@ function Step3({ values, onChange, error, setError, clearFieldError }) {
                 if (error.username) clearFieldError('username');
             }}
         />
-        {error.username && <span className="field-error">{error.username}</span>}
+        {error.username && <span className='field-error'>{error.username}</span>}
         
         <label htmlFor='avatar'>Upload Avatar</label>
         <label 
             htmlFor='avatar' 
-            className={`upload-input ${error.avatar ? "input-error" : ""} ${isDragging ? "upload-dragging" : ""}`}
+            className={`upload-input ${error.avatar ? 'input-error' : ''} ${isDragging ? 'upload-dragging' : ''}`}
             onDragOver={handleDragOver}
             onDrop={handleDrop}
             onDragLeave={handleDragLeave}
@@ -192,29 +192,29 @@ function Step3({ values, onChange, error, setError, clearFieldError }) {
             />
             {values.avatar ? (
             <div className='preview-content'>
-                <img src={URL.createObjectURL(values.avatar)} alt="preview" className="preview-image"/>
+                <img src={URL.createObjectURL(values.avatar)} alt='preview' className='preview-image'/>
                 <div className='preview-text'>
                     <p className='preview-title'>{values.avatar.name}</p>
                     <p className='preview-size'>
                         Size - {(values.avatar.size / 1024 / 1024).toFixed(2)} MB
                     </p>
-                    <span className="upload-link">Change</span>
+                    <span className='upload-link'>Change</span>
                 </div>
             </div>
             ) : (
             <div className='upload-content'>
                 <Upload className='icon'/>
                 <p>
-                    <span className="drag-text">Drag and drop or </span>
-                    <span className="upload-link">Upload File</span>
+                    <span className='drag-text'>Drag and drop or </span>
+                    <span className='upload-link'>Upload File</span>
                 </p>
-                <p className="file-types">
+                <p className='file-types'>
                     JPG, PNG or WebP
                 </p>
             </div>
             )}
         </label>
-        {error.avatar && <span className="field-error">{error.avatar}</span>}
+        {error.avatar && <span className='field-error'>{error.avatar}</span>}
         <button type='submit' className='btn-primary'>Sign Up</button>
 
     </>
@@ -279,7 +279,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
     return (
     <div className='modal-backdrop'>
         
-        <div className="modal">
+        <div className='modal'>
             {step > 1 && (
                 <button className='back-btn' onClick={goBack}><Back/></button>
             )}
@@ -326,7 +326,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
                     />
                     )}
 
-                    {error.general && <p className="modal-error">{error.general}</p>}
+                    {error.general && <p className='modal-error'>{error.general}</p>}
                 </form>
                 <div className='modal-line'>
                     <span>or</span>

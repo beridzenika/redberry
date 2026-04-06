@@ -36,7 +36,7 @@ function App() {
       {showProfile && (
         <Profile
           user={user}
-          onClose={() => setShowLogin(false)}
+          onClose={() => setShowProfile(false)}
         />
       )}
       {showLogin && (
