@@ -71,13 +71,12 @@ section {
     padding: 9px;
     width: 56px;
     border-radius: 50%;
-    border: 2px solid transparent;
-    transition: border-color 0.6s linear;
+    transition: box-shadow 0.6s linear;
     background-position: center;
     background-size: cover;
 }
 .avatar:hover{
-    border-color: var(--purple300);
+    box-shadow: 0 0 0 2px var(--purple300);
 }
 .avatar .status {
   position: absolute;

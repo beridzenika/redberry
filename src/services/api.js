@@ -49,7 +49,10 @@ export const updateProfile = async (profileData, token) => {
   if (profileData.fullName) formData.append('full_name', profileData.fullName);
   if (profileData.mobileNumber) formData.append('mobile_number', profileData.mobileNumber.replace(/\s/g, ''));
   if (profileData.age) formData.append('age', profileData.age);
-  if (profileData.avatar) formData.append('avatar', profileData.avatar);
+  if (profileData.avatar instanceof File) {
+    formData.append('avatar', profileData.avatar);
+  }
+
 
   const res = await fetch ('https://api.redclass.redberryinternship.ge/api/profile', {
     method: 'PUT',
@@ -65,5 +68,6 @@ export const updateProfile = async (profileData, token) => {
   if (!res.ok) {
     throw {message: data.message, errors: data.errors };
   }
+  
   return data;
 }

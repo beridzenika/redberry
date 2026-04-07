@@ -50,7 +50,15 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
             const data = await loginUser(email, password);
             onSuccess(data.data.user, data.data.token);
         } catch (err) {
-            setError(err.message);
+            if (err.errors) {
+                const mapped = {};
+                Object.keys(err.errors).forEach(field => {
+                    mapped[field] = err.errors[field][0];
+                });
+                setError(mapped);
+            } else {
+                setError({general: err.message || 'Something went wrong' });
+            }
         } finally {
             setLoading(false);
         }
@@ -111,6 +119,7 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                         )}
                     </span>
                     {error.password && <span className='field-error'>{error.password}</span>}
+                    {error.general && <span className="field-error">{error.general}</span>}
                     <button type='submit' className='btn-primary' disabled={loading}>
                         {loading ? 'Loading...' : 'Log In'}
                     </button>

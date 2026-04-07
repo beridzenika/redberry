@@ -18,8 +18,9 @@ function App() {
   const [token, setToken] = useState(null);
   
   const handleLoginSuccess = (userData, userToken) => {
-    setUser(userData);
-    setToken(userToken);
+    console.log(userData, userToken);
+    if (userData) setUser(userData);
+    if (userToken) setToken(userToken);
     
     setShowLogin(false);
     setShowSignin(false);

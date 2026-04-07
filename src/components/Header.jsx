@@ -26,8 +26,10 @@ function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
                         )}
                     </ul>
                     {user ? (
-                    <div className={`avatar ${user.avatar ? 'picture' : ''}`} onClick={onProfileClick}>
-                        <User width={38} height={38} />
+                    <div className='avatar' onClick={onProfileClick} style={{ backgroundImage: `url(${user.avatar})` }}>
+                        {user.avatar ? '' : (
+                            <User width={38} height={38} />
+                        )}
                         <span className={`status ${user.profileComplete ? 'complete' : ''}`} />
                     </div>
                     ) : (

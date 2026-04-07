@@ -11,9 +11,9 @@ import { updateProfile } from '../services/api';
 
 function Profile({ user, token, onSuccess, onClose }) {
     const [fullName, setFullName] = useState(user.fullName || '');
-    const [mobileNumber, setMobileNumber] = useState(user.mobileNumber || '+995 ');
+    const [mobileNumber, setMobileNumber] = useState(user.mobileNumber || '');
     const [age, setAge] = useState(user.age || '29');
-    const [avatar, setAvatar] = useState(null);
+    const [avatar, setAvatar] = useState(user.avatar || null);
 
     const numbers = Array.from({ length: 120 - 16 + 1 }, (_, i) => i + 16);
     const [selectIsOpen, setSelectIsOpen] = useState(false);
@@ -34,8 +34,7 @@ function Profile({ user, token, onSuccess, onClose }) {
         } else if (fullName.length > 50) {
             newErrors.fullName = 'Name must not exceed 50 characters';
         }
-
-        const cleanPhone = mobileNumber.replaceAll(' ', '').slice(4);
+        const cleanPhone = mobileNumber.replaceAll(' ', '');
         if (cleanPhone.length === 0) {
             newErrors.mobileNumber = 'Mobile number is required';
         } else if (isNaN(Number(cleanPhone))) {
@@ -72,9 +71,9 @@ function Profile({ user, token, onSuccess, onClose }) {
         setLoading(true);
 
         try {
-            const cleanPhone = mobileNumber.replaceAll(' ', '').slice(4);
+            const cleanPhone = mobileNumber.replaceAll(' ', '');
             const data = await updateProfile(
-                {fullName, mobileNumber: cleanPhone, age, avatar },
+                { fullName, mobileNumber: cleanPhone, age, avatar },
                 token
             );
             onSuccess(data.data);
@@ -85,6 +84,7 @@ function Profile({ user, token, onSuccess, onClose }) {
                     mapped[field] = err.errors[field][0];
                 });
                 setError(mapped);
+                console.log(mapped);
             } else {
                 setError({general: err.message || 'Something went wrong' });
             }
@@ -102,8 +102,10 @@ function Profile({ user, token, onSuccess, onClose }) {
                     <h2 className='modal-title'>Profile</h2>
                 </div>
                 <div className='profile-holder'>
-                    <div className='avatar'>
-                        <User width={38} height={38} />
+                    <div className='avatar' style={{ backgroundImage: `url(${user.avatar})` }}>
+                        {user.avatar ? '' : (
+                            <User width={38} height={38} />
+                        )}
                         <span className={`status ${user.profileComplete ? 'complete' : ''}`} />
                     </div>
                     <div className='profile-text'>
@@ -154,16 +156,14 @@ function Profile({ user, token, onSuccess, onClose }) {
                                 Mobile Number
                             </label>
                             <span className='input-wrapper'>
+                                <span className='prefix'>+995</span>
                                 <input
                                     id='mobileNumber'
                                     type='text'
-                                    placeholder='+995'
                                     value={mobileNumber}
                                     className={error.mobileNumber ? 'input-error' : ''}
                                     onChange={e => {
-                                        let input = e.target.value;
-                                        if (!input.startsWith('+995 ')) input = '+995 ';
-                                        setMobileNumber(input);
+                                        setMobileNumber(e.target.value);
                                         if (error.mobileNumber) clearFieldError('mobileNumber');
                                     }}
                                 />
@@ -214,8 +214,9 @@ function Profile({ user, token, onSuccess, onClose }) {
                             }
                         }}
                     />
+                    {error.general && <span className="field-error">{error.general}</span>}
                     <button className='btn-primary' disabled={loading}>
-                        {loading ? 'Saving...' : 'Update Profile'}
+                        {loading ? 'Loading state submission' : 'Update Profile'}
                     </button>
                 </form>
             </div>

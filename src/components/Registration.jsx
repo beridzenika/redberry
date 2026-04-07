@@ -272,7 +272,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
                     />
                     )}
 
-                    {error.general && <p className='modal-error'>{error.general}</p>}
+                    {error.general && <span className="field-error">{error.general}</span>}
                 </form>
                 <div className='modal-line'>
                     <span>or</span>

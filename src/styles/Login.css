@@ -83,6 +83,9 @@ select {
     appearance: none;
     -webkit-appearance: none;
 }
+#mobileNumber {
+    padding-left: 55px;
+}
 
 .input-container {
     display: grid;
@@ -91,14 +94,24 @@ select {
 }
 .input-wrapper {
     position: relative;
+    width: 100%;
 }
+.prefix {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray300);
+    pointer-events: none;
+    font-size: 14px;
+}
+
 .input-icon {
     position: absolute;
     right: 10px;
     height: 16px;
     top: calc(50% - 6px);
 }
-
 
 .select-open .input-icon {
     transform: rotateX(180deg);
@@ -137,7 +150,7 @@ select {
     border-color: var(--purple100);
     background: var(--purple50);
 }
-.upload-dragging {
+.upload-input-preview:hover, .upload-dragging {
     border-color: var(--purple200);
     background: var(--purple100);
 }

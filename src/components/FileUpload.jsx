@@ -58,12 +58,17 @@ function FileUpload({ avatar, onChange, error}) {
             />
             {avatar ? (
             <div className='preview-content'>
-                <img src={URL.createObjectURL(avatar)} alt='preview' className='preview-image'/>
+                <img 
+                    src={avatar instanceof File ? URL.createObjectURL(avatar) : avatar} 
+                    alt='preview' 
+                    className='preview-image'/>
                 <div className='preview-text'>
-                    <p className='preview-title'>{avatar.name}</p>
-                    <p className='preview-size'>
-                        Size - {(avatar.size / 1024 / 1024).toFixed(2)} MB
+                    <p className='preview-title'>
+                        {avatar instanceof File ? avatar.name : 'Current avatar'}
                     </p>
+                    {avatar instanceof File && (
+                        <p className="preview-size">Size - {(avatar.size / 1024 / 1024).toFixed(2)} MB</p>
+                    )}
                     <span className='upload-link'>Change</span>
                 </div>
             </div>
