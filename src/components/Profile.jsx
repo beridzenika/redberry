@@ -6,7 +6,7 @@ import { ReactComponent as SelectArrow } from '../assets/icons/Select.svg';
 import '../styles/Login.css'
 import FileUpload from './FileUpload';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { updateProfile } from '../services/api';
 
 function Profile({ user, token, onSuccess, onClose }) {
@@ -64,6 +64,30 @@ function Profile({ user, token, onSuccess, onClose }) {
         return true;
     };
 
+    const handleClose = () => {
+        if (!validate()) {
+            const confirmClose = window.confirm(
+                "Your profile is incomplete. You won't be able to enroll in courses until you complete it.\n\nClose anyway?"
+            );
+            if (!confirmClose) return;
+        }
+        onClose();
+    };
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') {
+                handleClose();
+            }
+        };
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, []);
+    const handleOverlayClick = (e) => {
+        if (e.target.classList.contains('modal-backdrop')) {
+            handleClose();
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validate()) return;
@@ -94,9 +118,12 @@ function Profile({ user, token, onSuccess, onClose }) {
     };
 
     return (
-    <div className='modal-backdrop'>
-        <div className='modal profile-modal'>
-            <button className='close-btn' onClick={onClose}><Close/></button>
+    <div className='modal-backdrop' onClick={handleClose}>
+        <div className='modal profile-modal' onClick={(e) => e.stopPropagation()}>
+            <button 
+                className='close-btn' 
+                onClick={handleClose}
+            ><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>
                     <h2 className='modal-title'>Profile</h2>

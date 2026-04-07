@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 
 import './styles/App.css';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -17,6 +17,18 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   
+  useEffect(() => {
+    if (showLogin || showSignin || showProfile) {
+        document.body.style.overflow = 'hidden';
+    } else {
+        document.body.style.overflow = '';
+    }
+
+    return () => {
+        document.body.style.overflow = '';
+    };
+  }, [showLogin, showSignin, showProfile]);
+
   const handleLoginSuccess = (userData, userToken) => {
     console.log(userData, userToken);
     if (userData) setUser(userData);

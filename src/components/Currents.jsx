@@ -1,7 +1,7 @@
 
 
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
-import '../styles/Currents.css';
+import '../styles/Courses.css';
 
 
 function Currents() {
@@ -19,13 +19,13 @@ function Currents() {
         <div className="card-holder">
             <article className='course-card'>
                 <div className='course-main'>
-                    <img src={require('../assets/imgs/current.png')} alt="curse image" className='course-img'/>
+                    <img src={require('../assets/imgs/current.png')} alt="curse image" className='current-img'/>
                     <div className="course-info">
                         <div className="course-meta">
                             <span className="course-lecturer">Lecturer Marilyn Mango</span>
                             <span className="course-rating"><Star/><span>4.9</span></span>
                         </div>
-                        <h3 className='course-title'>Advanced React & TypeScript Development</h3>
+                        <h3 className='course-title current-title'>Advanced React & TypeScript Development</h3>
                     </div>
                 </div>
                 <div className='course-footer'>

@@ -50,8 +50,8 @@ function Hero() {
         <div key={slide.id} className='hero-slide' style = {{ backgroundImage: `url(${slide.image})` }}>
             <div className='content'>
               <div className='text'>
-                <h1>{slide.title}</h1>
-                <p>
+                <h1 className='hero-title'>{slide.title}</h1>
+                <p className='hero-subtitle'>
                     {slide.subtitle}
                 </p>
               </div>

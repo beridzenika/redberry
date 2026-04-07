@@ -32,12 +32,12 @@
     margin-bottom: 40px;
 }
 
-h1 {
+.hero-title {
     font-style: bold;
     font-weight: 700;
     font-size: 48px;
 }
-p {
+.hero-subtitle {
     font-weight: 300;
     font-size: 24px;
     max-width: 1218px;
