@@ -108,7 +108,7 @@ input, .upload-input {
     cursor: pointer;
     padding: 30px 0;
 }
-.upload-input:hover .upload-input-preview {
+.upload-input:hover, .upload-input-preview {
     border-color: var(--purple100);
     background: var(--purple50);
 }
@@ -149,6 +149,7 @@ input, .upload-input {
     width: 54px;
     height: 54px;
     border-radius: 40px;
+    object-fit: cover;
 }
 .preview-title {
     font-weight: 400;

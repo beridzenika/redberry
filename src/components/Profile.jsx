@@ -1,6 +1,7 @@
 import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Login.css'
+import FileUpload from './FileUpload';
 
 import { use, useState } from 'react';
 
@@ -147,7 +148,18 @@ function Profile({ user, onSuccess, onClose }) {
                     />
                     {error.age && <span className="field-error">{error.age}</span>}
 
-                    <label htmlFor='avatar'>Upload Avatar</label>
+                    <FileUpload
+                        avatar={avatar}
+                        error={error.avatar}
+                        onChange={(file, fileError) => {
+                            if (fileError) {
+                            setError(prev => ({ ...prev, avatar: fileError }));
+                            } else {
+                            clearFieldError('avatar');
+                            setAvatar(file);
+                            }
+                        }}
+                    />
                     
                     
 

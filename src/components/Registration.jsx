@@ -4,9 +4,10 @@ import { ReactComponent as PassEye } from '../assets/icons/PassEye.svg';
 import { ReactComponent as ClosedEye } from '../assets/icons/ClosedEye.svg';
 import { ReactComponent as Upload } from '../assets/icons/Upload.svg';
 import '../styles/Login.css'
+import FileUpload from './FileUpload';
+import { registerUser } from '../services/api';
 
 import { useState } from 'react';
-import { registerUser } from '../services/api';
 
 
 function Step1({ values, onChange, error, setError, clearFieldError, onNext }) {
@@ -123,40 +124,6 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
 }
 
 function Step3({ values, onChange, error, setError, clearFieldError }) {
-    
-    const processFile = (file) => {
-        if (!file) return;
-        
-        const allowed = ['image/jpg', 'image/png', 'image/webp'];
-        if (!allowed.includes(file.type)) {
-            setError(prev => ({ ...prev, avatar: 'Must be jpg, png or webp' }));
-            return;
-        }
-        clearFieldError('avatar');
-        onChange('avatar', file);
-    }
-    
-    const handleFileChange = (e) => {
-        processFile(e.target.files[0]);
-    };
-    
-    const [isDragging, setIsDragging] = useState(false);
-    const handleDrop = (e) => {
-        e.preventDefault();
-        setIsDragging(false);
-
-        const file = e.dataTransfer.files[0];
-        if (file) {
-            handleFileChange({ target: { files: [file] } });
-        }
-    };
-    const handleDragOver = (e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-    const handleDragLeave = () => {
-        setIsDragging(false);
-    };
 
   return (
     <>
@@ -176,45 +143,19 @@ function Step3({ values, onChange, error, setError, clearFieldError }) {
         />
         {error.username && <span className='field-error'>{error.username}</span>}
         
-        <label htmlFor='avatar'>Upload Avatar</label>
-        <label 
-            htmlFor='avatar' 
-            className={`upload-input ${error.avatar ? 'input-error' : ''} ${isDragging ? 'upload-dragging' : ''}`}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-            onDragLeave={handleDragLeave}
-        >
-            <input
-            id='avatar'
-            type='file'
-            accept='.jpg,.jpeg,.png,.webp'
-            onChange={handleFileChange}
-            />
-            {values.avatar ? (
-            <div className='preview-content'>
-                <img src={URL.createObjectURL(values.avatar)} alt='preview' className='preview-image'/>
-                <div className='preview-text'>
-                    <p className='preview-title'>{values.avatar.name}</p>
-                    <p className='preview-size'>
-                        Size - {(values.avatar.size / 1024 / 1024).toFixed(2)} MB
-                    </p>
-                    <span className='upload-link'>Change</span>
-                </div>
-            </div>
-            ) : (
-            <div className='upload-content'>
-                <Upload className='icon'/>
-                <p>
-                    <span className='drag-text'>Drag and drop or </span>
-                    <span className='upload-link'>Upload File</span>
-                </p>
-                <p className='file-types'>
-                    JPG, PNG or WebP
-                </p>
-            </div>
-            )}
-        </label>
-        {error.avatar && <span className='field-error'>{error.avatar}</span>}
+        <FileUpload
+            avatar={values.avatar}
+            error={error.avatar}
+            onChange={(file, fileError) => {
+                if (fileError) {
+                setError(prev => ({ ...prev, avatar: fileError }));
+                } else {
+                clearFieldError('avatar');
+                onChange('avatar', file);
+                }
+            }}
+        />
+        
         <button type='submit' className='btn-primary'>Sign Up</button>
 
     </>
