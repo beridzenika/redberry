@@ -8,7 +8,7 @@ import Dashboard from "./pages/Dashboard";
 
 import './styles/App.css';
 
-import { use, useState } from 'react';
+import { useState } from 'react';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -23,6 +23,7 @@ function App() {
     
     setShowLogin(false);
     setShowSignin(false);
+    setShowProfile(false);
   };
 
   return (
@@ -36,6 +37,8 @@ function App() {
       {showProfile && (
         <Profile
           user={user}
+          token={token}
+          onSuccess={handleLoginSuccess}
           onClose={() => setShowProfile(false)}
         />
       )}

@@ -1,3 +1,4 @@
+
 export const loginUser = async (email, password) => {
   const res = await fetch(`https://api.redclass.redberryinternship.ge/api/login`, {
     method: 'POST',
@@ -41,3 +42,28 @@ export const registerUser = async ({ email, password, password_confirmation, use
   }
   return data;
 };
+
+export const updateProfile = async (profileData, token) => {
+  const formData = new FormData();
+
+  if (profileData.fullName) formData.append('full_name', profileData.fullName);
+  if (profileData.mobileNumber) formData.append('mobile_number', profileData.mobileNumber.replace(/\s/g, ''));
+  if (profileData.age) formData.append('age', profileData.age);
+  if (profileData.avatar) formData.append('avatar', profileData.avatar);
+
+  const res = await fetch ('https://api.redclass.redberryinternship.ge/api/profile', {
+    method: 'PUT',
+    headers: {
+      'accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw {message: data.message, errors: data.errors };
+  }
+  return data;
+}

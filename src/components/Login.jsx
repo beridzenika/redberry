@@ -12,6 +12,7 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
     const [isVisible, setIsVisible] = useState(false);
 
     const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const clearFieldError = (field) => {
         setError(prev => ({ ...prev, [field]: undefined }));
@@ -40,7 +41,8 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError({});
-
+        setLoading(true);
+        
         const isValid = validate();
         if (!isValid) return;
 
@@ -49,6 +51,8 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
             onSuccess(data.data.user, data.data.token);
         } catch (err) {
             setError(err.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -84,9 +88,10 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                     <span className='input-wrapper'>
                         <input
                             id='password'
-                            type={isVisible ? 'password' : 'text'}
+                            type={isVisible ? 'text' : 'password'}
                             placeholder='••••••••'
                             value={password}
+                            autoComplete='off'
                             className={error.password ? 'input-error' : ''}
                             onChange={e => {
                                 setPassword(e.target.value);
@@ -95,18 +100,20 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
                         />
                         {isVisible ? (
                         <ClosedEye height={20}
-                            className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                            className={`input-icon ${error.password ? 'icon-error' : ''}`}
                             onClick={() => setIsVisible(false)}
                         />
                         ) : (
                         <PassEye 
-                            className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                            className={`input-icon ${error.password ? 'icon-error' : ''}`}
                             onClick={() => setIsVisible(true)}
                         />
                         )}
                     </span>
                     {error.password && <span className='field-error'>{error.password}</span>}
-                    <button className='btn-primary'>Log In</button>
+                    <button type='submit' className='btn-primary' disabled={loading}>
+                        {loading ? 'Loading...' : 'Log In'}
+                    </button>
                 </form>
                 <div className='modal-line'>
                     <span>or</span>

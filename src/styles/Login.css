@@ -47,7 +47,7 @@
     display: flex;
     gap: 12px;
     align-items: center;
-    margin-top: 24px;
+    margin: 24px 0;
 }
 .profile-title {
     font-weight: 600;
@@ -69,19 +69,39 @@ label {
     margin: 24px 0 5px;
     display: block;
 }
-input, .upload-input {
+.profile-modal label {
+    margin: 12px 0 5px;
+}
+input, select, .upload-input {
     width: 100%;
     border-radius: 8px;
     border: 1.5px solid var(--gray200);
     padding: 12px 15px;
+    color: var(--gray300);
+}
+select {
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.input-container {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 3fr 1fr;
 }
 .input-wrapper {
     position: relative;
 }
-.password-icon {
+.input-icon {
     position: absolute;
     right: 10px;
-    top: calc(50% - 8px);
+    height: 16px;
+    top: calc(50% - 6px);
+}
+
+
+.select-open .input-icon {
+    transform: rotateX(180deg);
 }
 
 .label-error, .input-error, .field-error {
@@ -96,6 +116,11 @@ input, .upload-input {
 }
 .icon-error * {
     stroke: var(--error) !important;
+}
+
+.profile-input {
+    background: var(--gray100);
+    border-color: var(--gray300);
 }
 
 .upload-container {

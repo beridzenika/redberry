@@ -2,7 +2,6 @@ import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as Back } from '../assets/icons/Back.svg';
 import { ReactComponent as PassEye } from '../assets/icons/PassEye.svg';
 import { ReactComponent as ClosedEye } from '../assets/icons/ClosedEye.svg';
-import { ReactComponent as Upload } from '../assets/icons/Upload.svg';
 import '../styles/Login.css'
 import FileUpload from './FileUpload';
 import { registerUser } from '../services/api';
@@ -30,7 +29,7 @@ function Step1({ values, onChange, error, setError, clearFieldError, onNext }) {
   return (
     <>
         <label htmlFor='email' className={error.email ? 'label-error' : ''}>
-            Email
+            Email*
         </label>
         <input
             id='email'
@@ -70,14 +69,15 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
   return (
     <>
         <label htmlFor='password' className={error.password ? 'label-error' : ''}>
-            Password
+            Password*
         </label>
         <span className='input-wrapper'>
             <input
                 id='password'
-                type={isVisible ? 'password' : 'text'}
+                type={isVisible ? 'text' : 'password'}
                 placeholder='••••••••'
                 value={values.password}
+                autocomplete='off'
                 className={error.password ? 'input-error' : ''}
                 onChange={e => {
                     onChange('password', e.target.value);
@@ -86,12 +86,12 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
             />
             {isVisible ? (
             <ClosedEye height={20}
-                className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                className={`input-icon ${error.password ? 'icon-error' : ''}`}
                 onClick={() => setIsVisible(false)}
             />
             ) : (
             <PassEye 
-                className={error.password ? 'password-icon icon-error' : 'password-icon'}
+                className={`input-icon ${error.password ? 'icon-error' : ''}`}
                 onClick={() => setIsVisible(true)}
             />
             )}
@@ -99,13 +99,14 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
         {error.password && <span className='field-error'>{error.password}</span>}
 
         <label htmlFor='confirm' className={error.password_confirmation ? 'label-error' : ''}>
-            Confirm Password
+            Confirm Password*
         </label>
         <span className='input-wrapper'>
             <input
                 id='confirm'
                 type='password'
                 placeholder='••••••••'
+                autocomplete='off'
                 value={values.password_confirmation}
                 className={error.password_confirmation ? 'input-error' : ''}
                 onChange={e => {
@@ -114,7 +115,7 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
                 }}
             />
             <ClosedEye height={20}
-                className={error.password_confirmation ? 'password-icon icon-error' : 'password-icon'}
+                className={`input-icon ${error.password_confirmation ? 'icon-error' : ''}`}
             />
         </span>
         {error.password_confirmation && <span className='field-error'>{error.password_confirmation}</span>}
@@ -123,12 +124,12 @@ function Step2({ values, onChange,  error, setError, clearFieldError, onNext }) 
   );
 }
 
-function Step3({ values, onChange, error, setError, clearFieldError }) {
+function Step3({ values, onChange, error, setError, loading, clearFieldError }) {
 
   return (
     <>
         <label htmlFor='username' className={error.username ? 'label-error' : ''}>
-            Username
+            Username*
         </label>
         <input
             id='username'
@@ -155,9 +156,9 @@ function Step3({ values, onChange, error, setError, clearFieldError }) {
                 }
             }}
         />
-        
-        <button type='submit' className='btn-primary'>Sign Up</button>
-
+        <button type='submit' className='btn-primary' disabled={loading}>
+            {loading ? 'Loading...' : 'Sign Up'}
+        </button>
     </>
   );
 }
@@ -167,6 +168,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
     const [step, setStep] = useState(1);
     
     const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
     const clearFieldError = (field) => {
         setError(prev => ({ ...prev, [field]: undefined }));
     };
@@ -194,13 +196,13 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
         const newErrors = {};
         e.preventDefault();
         setError({});
+        setLoading(true);
 
         if (values.username.length < 3) {
             newErrors.username = 'Username must be at least 3 characters';
             setError(newErrors);
             return;
         }
-
         try {
             const data = await registerUser(values);
             onSuccess(data.data.user, data.data.token);
@@ -214,6 +216,8 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
             } else {
                 setError({ general: err.message || 'Something went wrong' });
             }
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -263,6 +267,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
                         onChange={updateField}
                         error={error}
                         setError={setError}
+                        loading={loading}
                         clearFieldError={clearFieldError}
                     />
                     )}

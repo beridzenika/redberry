@@ -1,15 +1,22 @@
 import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as User } from '../assets/icons/User.svg';
+import { ReactComponent as Complete } from '../assets/icons/V.svg';
+import { ReactComponent as Edit } from '../assets/icons/Edit.svg';
+import { ReactComponent as SelectArrow } from '../assets/icons/Select.svg';
 import '../styles/Login.css'
 import FileUpload from './FileUpload';
 
-import { use, useState } from 'react';
+import { useState } from 'react';
+import { updateProfile } from '../services/api';
 
-function Profile({ user, onSuccess, onClose }) {
+function Profile({ user, token, onSuccess, onClose }) {
     const [fullName, setFullName] = useState(user.fullName || '');
-    const [mobileNumber, setMobileNumber] = useState('+995 ');
-    const [age, setAge] = useState('');
+    const [mobileNumber, setMobileNumber] = useState(user.mobileNumber || '+995 ');
+    const [age, setAge] = useState(user.age || '29');
     const [avatar, setAvatar] = useState(null);
+
+    const numbers = Array.from({ length: 120 - 16 + 1 }, (_, i) => i + 16);
+    const [selectIsOpen, setSelectIsOpen] = useState(false);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
@@ -17,8 +24,6 @@ function Profile({ user, onSuccess, onClose }) {
         setError(prev => ({ ...prev, [field]: undefined }));
     };
 
-
-    
     const validate = () => {
         const newErrors = {};
 
@@ -52,8 +57,8 @@ function Profile({ user, onSuccess, onClose }) {
         }
 
         if (Object.keys(newErrors).length > 0) {
-        setError(newErrors);
-        return false;
+            setError(newErrors);
+            return false;
         }
 
         setError({});
@@ -62,15 +67,35 @@ function Profile({ user, onSuccess, onClose }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const isValid = validate();
-        if (!isValid) return;
+        if (!validate()) return;
         setError({});
+        setLoading(true);
 
+        try {
+            const cleanPhone = mobileNumber.replaceAll(' ', '').slice(4);
+            const data = await updateProfile(
+                {fullName, mobileNumber: cleanPhone, age, avatar },
+                token
+            );
+            onSuccess(data.data);
+        } catch (err){
+            if (err.errors) {
+                const mapped = {};
+                Object.keys(err.errors).forEach(field => {
+                    mapped[field] = err.errors[field][0];
+                });
+                setError(mapped);
+            } else {
+                setError({general: err.message || 'Something went wrong' });
+            }
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
     <div className='modal-backdrop'>
-        <div className='modal'>
+        <div className='modal profile-modal'>
             <button className='close-btn' onClick={onClose}><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>
@@ -79,12 +104,12 @@ function Profile({ user, onSuccess, onClose }) {
                 <div className='profile-holder'>
                     <div className='avatar'>
                         <User width={38} height={38} />
-                        <span className={`status ${user.mobilenumber && user.age ? 'complete' : ''}`} />
+                        <span className={`status ${user.profileComplete ? 'complete' : ''}`} />
                     </div>
                     <div className='profile-text'>
                         <h4 className='profile-title'>{user.username}</h4>
-                        <span className={user.mobilenumber && user.age ? 'complete' : ''}>
-                            {user.mobilenumber && user.age ? 'Profile is Complete' : 'Incomplete Profile'}
+                        <span className={user.profileComplete ? 'complete' : ''}>
+                            {user.profileComplete ? 'Profile is Complete' : 'Incomplete Profile'}
                         </span>
                     </div>
                 </div>
@@ -93,59 +118,88 @@ function Profile({ user, onSuccess, onClose }) {
                     <label htmlFor='fullName' className={error.fullName ? 'label-error' : ''}>
                         Full Name
                     </label>
-                    <input
-                        id='fullName'
-                        type='text'
-                        placeholder='Username'
-                        value={fullName}
-                        className={error.fullName ? 'input-error' : ''}
-                        onChange={e => {
-                            setFullName(e.target.value);
-                            if (error.fullName) clearFieldError('fullName');
-                        }}
-                    />
+                    <span className='input-wrapper'>
+                        <input
+                            id='fullName'
+                            type='text'
+                            placeholder='Username'
+                            value={fullName}
+                            className={`profile-input ${error.fullName ? 'input-error' : ''}`}
+                            onChange={e => {
+                                setFullName(e.target.value);
+                                if (error.fullName) clearFieldError('fullName');
+                            }}
+                        />
+                        <Edit className='input-icon'/>
+                    </span>
+                    
                     {error.fullName && <span className="field-error">{error.fullName}</span>}
 
                     <label htmlFor='email'>Email</label>
-                    <input
-                        type='email'
-                        placeholder='Email@gmail.com'
-                        value={user.email}
-                        readOnly
-                    />
-
-                    <label htmlFor='mobileNumber' className={error.mobileNumber ? 'label-error' : ''}>
-                        Mobile Number
-                    </label>
-                    <input
-                        id='mobileNumber'
-                        type='text'
-                        placeholder='+995'
-                        value={mobileNumber}
-                        className={error.mobileNumber ? 'input-error' : ''}
-                        onChange={e => {
-                            let input = e.target.value;
-                            if (!input.startsWith('+995 ')) input = '+995 ';
-                            setMobileNumber(input);
-                            if (error.mobileNumber) clearFieldError('mobileNumber');
-                        }}
-                    />
-                     {error.mobileNumber && <span className="field-error">{error.mobileNumber}</span>}
-
-                    <label htmlFor='age' className={error.age ? 'label-error' : ''}>
-                        Age
-                    </label>
-                    <input
-                        id='age'
-                        type='text'
-                        placeholder='29'
-                        value={age}
-                        className={error.age ? 'input-error' : ''}
-                        onChange={e => {
-                            setAge(e.target.value);
-                            if (error.age) clearFieldError('age');
-                        }}
-                    />
+                    <span className='input-wrapper'>
+                        <input
+                            id='email'
+                            type='email'
+                            placeholder='Email@gmail.com'
+                            value={user.email}
+                            className='profile-input'
+                            readOnly
+                        />
+                        <Complete className='input-icon'/>
+                    </span>
+                    
+                    <div className='input-container'>
+                        <div className='input-holder'>
+                            <label htmlFor='mobileNumber' className={error.mobileNumber ? 'label-error' : ''}>
+                                Mobile Number
+                            </label>
+                            <span className='input-wrapper'>
+                                <input
+                                    id='mobileNumber'
+                                    type='text'
+                                    placeholder='+995'
+                                    value={mobileNumber}
+                                    className={error.mobileNumber ? 'input-error' : ''}
+                                    onChange={e => {
+                                        let input = e.target.value;
+                                        if (!input.startsWith('+995 ')) input = '+995 ';
+                                        setMobileNumber(input);
+                                        if (error.mobileNumber) clearFieldError('mobileNumber');
+                                    }}
+                                />
+                                <Complete className='input-icon'/>
+                            </span>
+                        </div>
+                        <div className='input-holder'>
+                            <label htmlFor='age' className={error.age ? 'label-error' : ''}>
+                                Age
+                            </label>
+                            <span className={`input-wrapper ${selectIsOpen ? 'select-open' : ''}`}>
+                                <select
+                                    id='age'
+                                    type='text'
+                                    placeholder='29'
+                                    value={age}
+                                    className={error.age ? 'input-error' : ''}
+                                    onChange={e => {
+                                        setAge(e.target.value);
+                                        if (error.age) clearFieldError('age');
+                                    }}
+                                    onMouseDown={() => setSelectIsOpen((prev) => !prev)}
+                                    onBlur={() => setSelectIsOpen(false)}
+                                >
+                                {numbers.map((num) => (
+                                    <option key={num} value={num}>
+                                    {num}
+                                    </option>
+                                ))}
+                                </select>
+                                <SelectArrow className='input-icon'/>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    {error.mobileNumber && <span className="field-error">{error.mobileNumber}</span>}
                     {error.age && <span className="field-error">{error.age}</span>}
 
                     <FileUpload
@@ -160,10 +214,9 @@ function Profile({ user, onSuccess, onClose }) {
                             }
                         }}
                     />
-                    
-                    
-
-                    <button className='btn-primary'>{loading ? 'Saving...' : 'Update Profile'}</button>
+                    <button className='btn-primary' disabled={loading}>
+                        {loading ? 'Saving...' : 'Update Profile'}
+                    </button>
                 </form>
             </div>
         </div>

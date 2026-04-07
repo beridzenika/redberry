@@ -60,7 +60,7 @@ function Hero() {
             <div className='carusel-nav'>
               <div className='pagination'>
                 {slides.map((_, index) => (
-                  <span className={`${i===index ? 'active' : ''}`} />
+                  <span key={index} className={`${i===index ? 'active' : ''}`} />
                 ))}
               </div>
               <div className='arrow-box'>

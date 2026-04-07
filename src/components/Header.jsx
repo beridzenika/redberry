@@ -26,9 +26,9 @@ function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
                         )}
                     </ul>
                     {user ? (
-                    <div className='avatar' onClick={onProfileClick}>
+                    <div className={`avatar ${user.avatar ? 'picture' : ''}`} onClick={onProfileClick}>
                         <User width={38} height={38} />
-                        <span className={`status ${user.mobilenumber && user.age ? 'complete' : ''}`} />
+                        <span className={`status ${user.profileComplete ? 'complete' : ''}`} />
                     </div>
                     ) : (
                     <>
