@@ -88,3 +88,19 @@ export const getFeatured = async () => {
   }
   return data;
 };
+export const getInProgress = async (token) => {
+  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/in-progress`, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+       'Authorization': `Bearer ${token}`,
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw { message: data.message || 'Failed to fetch featured courses'};
+  }
+  return data;
+};

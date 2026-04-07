@@ -30,7 +30,6 @@ function App() {
   }, [showLogin, showSignin, showProfile]);
 
   const handleLoginSuccess = (userData, userToken) => {
-    console.log(userData, userToken);
     if (userData) setUser(userData);
     if (userToken) setToken(userToken);
     
@@ -70,7 +69,7 @@ function App() {
         />
       )}
 
-      <Dashboard/>
+      <Dashboard user={user} token={token}/>
       <Footer/>
     </div>
   );

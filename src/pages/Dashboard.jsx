@@ -2,11 +2,11 @@ import Hero from "../components/Hero";
 import Currents from "../components/Currents";
 import Featured from "../components/Featured";
 
-function Dashboard() {
+function Dashboard( {user, token} ) {
   return (
     <main className="container">
         <Hero/>
-        <Currents/>
+        <Currents user={user} token={token} />
         <Featured/>
     </main>
   );

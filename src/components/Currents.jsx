@@ -2,10 +2,68 @@
 
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
 import '../styles/Courses.css';
+import { getInProgress } from '../services/api';
+import { useState, useEffect } from 'react';
 
+const DUMMY_COURSES = [
+    {   
+        id: 0,
+        progress: 65,
+        course: {
+            image: require('../assets/imgs/current.png'),
+            title: "Advanced React & TypeScript Development",
+            avgRating: 4.9,
+            instructor: {
+                name: "Marilyn Mango",
+            }
+        }
+    },
+    {   
+        id: 1,
+        progress: 65,
+        course: {
+            image: require('../assets/imgs/current.png'),
+            title: "Advanced React & TypeScript Development",
+            avgRating: 4.9,
+            instructor: {
+                name: "Marilyn Mango",
+            }
+        }
+    },
+    {   
+        id: 2,
+        progress: 65,
+        course: {
+            image: require('../assets/imgs/current.png'),
+            title: "Advanced React & TypeScript Development",
+            avgRating: 4.9,
+            instructor: {
+                name: "Marilyn Mango",
+            }
+        }
+    }
+];
 
-function Currents() {
-  return (
+function Currents( {user, token} ) {
+    const [courses, setCourses] = useState([]);
+    const [error, setError] = useState(null);
+    useEffect(() => {
+        if(!user) {
+            setCourses(DUMMY_COURSES);
+            return;
+        }
+        const fetchCourses = async () => {
+            try {
+                const data = await getInProgress(token);
+                setCourses(data.data);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+        fetchCourses();
+    }, [user]);
+
+    return (
     <section>
         <div className="header-box">
             <header className="section-header">
@@ -16,32 +74,46 @@ function Currents() {
             </header>
             <a href="#" className='courses-more-link'>See All</a>    
         </div>
+        {!user && (
+            <div className='blur'>this is blur</div>
+        )}
         <div className="card-holder">
-            <article className='course-card'>
+        {error ? (
+            <span className="field-error">{error}</span>
+        ) : (
+            user && courses.length === 0 ? (
+                <>
+                    <h3>You haven't enrolled in any courses yet. Start your learning journey today!</h3>
+                    <button className='btn-primary'>Browse Courses</button>
+                </>
+            ) :
+            (courses.map((course) =>
+            <article className='course-card' key={course.id}>
                 <div className='course-main'>
-                    <img src={require('../assets/imgs/current.png')} alt="curse image" className='current-img'/>
+                    <img src={`${course.course.image}`} alt="curse image" className='current-img'/>
                     <div className="course-info">
                         <div className="course-meta">
-                            <span className="course-lecturer">Lecturer Marilyn Mango</span>
-                            <span className="course-rating"><Star/><span>4.9</span></span>
+                            <span className="course-lecturer">Lecturer {course.course.instructor.name}</span>
+                            <span className="course-rating"><Star/><span>{course.course.avgRating}</span></span>
                         </div>
-                        <h3 className='course-title current-title'>Advanced React & TypeScript Development</h3>
+                        <h3 className='course-title current-title'>{course.course.title}</h3>
                     </div>
                 </div>
                 <div className='course-footer'>
                     <div className='curse-progress'>
-                        <span>65% Complete</span>
+                        <span>{course.progress}% Complete</span>
                         <div className="progress-bar">
-                            <div className="progress-fill" style={{ width: `65%` }} />
+                            <div className="progress-fill" style={{ width: `${course.progress}%` }} />
                         </div>
                     </div>
                     <button className='btn-secondary'>View</button>
                 </div>
             </article>
-            
+            ))
+        )}
         </div>
     </section>
-  )
+    )
 };
 
 export default Currents;

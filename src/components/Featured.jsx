@@ -3,19 +3,19 @@ import '../styles/Courses.css';
 import { getFeatured } from '../services/api';
 import { useState, useEffect } from 'react';
 
-function Courses() {
+function Featured() {
     const [courses, setCourses] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
-    const fetchCourses = async () => {
-        try {
-        const data = await getFeatured();
-        setCourses(data.data);
-        } catch (err) {
-        setError(err.message);
-        }
-    };
-    fetchCourses();
+        const fetchCourses = async () => {
+            try {
+            const data = await getFeatured();
+            setCourses(data.data);
+            } catch (err) {
+            setError(err.message);
+            }
+        };
+        fetchCourses();
     }, []);
 
     return (
@@ -30,7 +30,10 @@ function Courses() {
         </div>
         <div className="card-holder">
         {courses.map((course) => (
-            <article className='course-card featured'>
+            error ? (
+                <span className="field-error">{error}</span>
+            ) : (
+            <article className='course-card featured' key={course.id}>
                 <div className='course-main featured'>
                     <img src={`${course.image}`} alt="curse image" className='course-img'/>
                     <div className="course-meta">
@@ -48,10 +51,11 @@ function Courses() {
                     <button className='btn-primary'>Details</button>
                 </div>
             </article>
+            )
         ))}
         </div>
     </section>
-    )
-}
+    );
+};
 
-export default Courses
+export default Featured;
