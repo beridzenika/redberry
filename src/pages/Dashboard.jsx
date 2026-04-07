@@ -1,13 +1,13 @@
 import Hero from "../components/Hero";
 import Currents from "../components/Currents";
-import Courses from "../components/Courses";
+import Featured from "../components/Featured";
 
 function Dashboard() {
   return (
     <main className="container">
         <Hero/>
         <Currents/>
-        <Courses/>
+        <Featured/>
     </main>
   );
 }

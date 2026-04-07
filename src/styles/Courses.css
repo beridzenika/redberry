@@ -27,19 +27,30 @@
     background: var(--gray50);
     border-radius: 12px;
     padding: 20px;
+}
+.course-card.current {
     border: solid 0.5px transparent;
     box-shadow: 0px 0px 11.7px 0px rgba(0, 0, 0, 0.04);
+}
+.course-card.featured {
+    border: solid 1px var(--gray100);
+    display: grid;
+    grid-template-rows: 1fr auto;
 }
 .course-card:hover {
     border-color: var(--purple200);
     box-shadow: 0px 0px 25px 0px rgba(138, 130, 212, 0.1);
+}
+.course-card:active {
+    border-color: var(--purple300);
+    box-shadow: 0px 0px 35px 0px rgba(138, 130, 212, 0.25);
 }
 .course-main {
     display: flex;
     gap: 16px;
     margin-bottom: 8px;
 }
-.course-main.course {
+.course-main.featured {
     flex-direction: column;
 }
 .course-main img {

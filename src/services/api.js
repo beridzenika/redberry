@@ -71,3 +71,20 @@ export const updateProfile = async (profileData, token) => {
   
   return data;
 }
+
+
+export const getFeatured = async () => {
+  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/featured`, {
+    method: 'GET',
+    headers: {
+      'accept': 'application/json',
+    },
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    throw { message: data.message || 'Failed to fetch featured courses'};
+  }
+  return data;
+};
