@@ -1,6 +1,7 @@
 
 
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
+import { ReactComponent as Lock } from '../assets/icons/Lock.svg';
 import '../styles/Courses.css';
 import { getInProgress } from '../services/api';
 import { useState, useEffect } from 'react';
@@ -44,7 +45,7 @@ const DUMMY_COURSES = [
     }
 ];
 
-function Currents( {user, token} ) {
+function Currents( {user, token, onLoginClick } ) {
     const [courses, setCourses] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -74,10 +75,18 @@ function Currents( {user, token} ) {
             </header>
             <a href="#" className='courses-more-link'>See All</a>    
         </div>
-        {!user && (
-            <div className='blur'>this is blur</div>
-        )}
         <div className="card-holder">
+        {!user && (
+            <div className='current-blur'>
+                <div className='current-pop-up course-card'>
+                    <div className='icon-holder lock'>
+                        <Lock/>
+                    </div>
+                    <p className='pop-up-title'>Sign in to track your learning progress</p>
+                    <button className='btn-primary' onClick={onLoginClick}>Log In</button>
+                </div>
+            </div>
+        )}
         {error ? (
             <span className="field-error">{error}</span>
         ) : (

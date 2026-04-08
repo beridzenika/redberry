@@ -69,7 +69,7 @@ function App() {
         />
       )}
 
-      <Dashboard user={user} token={token}/>
+      <Dashboard user={user} token={token} onLoginClick={() => setShowLogin(true)}/>
       <Footer/>
     </div>
   );

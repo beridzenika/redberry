@@ -129,7 +129,7 @@ function Profile({ user, token, onSuccess, onClose }) {
                     <h2 className='modal-title'>Profile</h2>
                 </div>
                 <div className='profile-holder'>
-                    <div className='avatar' style={{ backgroundImage: `url(${user.avatar})` }}>
+                    <div className='avatar icon-holder' style={{ backgroundImage: `url(${user.avatar})` }}>
                         {user.avatar ? '' : (
                             <User width={38} height={38} />
                         )}

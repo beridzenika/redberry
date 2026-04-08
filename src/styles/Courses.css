@@ -22,6 +22,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 24px;
+    position: relative;
 }
 .course-card {
     background: var(--gray50);
@@ -88,7 +89,7 @@
     font-size: 20px;
     margin-top: 9px;
 }
-.course-description {
+.course-description .pop-up-text {
     font-size: 16px;
     color: var(--gray500);
     max-width: 400px;
@@ -130,4 +131,33 @@
 }
 .course-footer .btn-secondary {
     padding: 10px 20px;
+}
+
+.current-blur {
+    position: absolute;
+    width: calc(100% + 60px);
+    height: calc(100% + 60px);
+    top: -30px;
+    left: -30px;
+    backdrop-filter: blur(10px);
+    background: #f5f5f530;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.current-pop-up {
+    width: 418px;
+    border: 1px solid rgba(173, 173, 173, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.lock {
+    padding: 20px;
+    height: 77px;
+}
+.current-pop-up button {
+    margin: 12px 0 0;
+    font-size: 16px;
 }
