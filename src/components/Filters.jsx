@@ -1,27 +1,11 @@
-import { ReactComponent as Arrow } from '../assets/icons/Back.svg';
 import { ReactComponent as Close } from '../assets/icons/X.svg';
 
 import '../styles/Filters.css';
 
 import { useState, useEffect } from 'react';
-import { Link } from "react-router-dom/cjs/react-router-dom.min"
 import { getData } from '../services/api';
 
-import { ReactComponent as business } from '../assets/icons/filters/business.svg';
-import { ReactComponent as dataScience } from '../assets/icons/filters/data-science.svg';
-import { ReactComponent as design } from '../assets/icons/filters/design.svg';
-import { ReactComponent as development } from '../assets/icons/filters/development.svg';
-import { ReactComponent as marketing } from '../assets/icons/filters/marketing.svg';
-
-const icons = {
-    'business': business,
-    'data-science': dataScience,
-    'design': design,
-    'development': development,
-    'marketing': marketing
-}
-
-function Filters() {
+function Filters( {icons} ) {
     const [selected, setSelected] = useState([]);
     const [categories, setCategories] = useState([]);
     const [topics, setTopics] = useState([]);
@@ -59,11 +43,6 @@ function Filters() {
 
     return (
     <aside>
-        <div className="links">
-            <Link to="/">Home</Link>
-            <Arrow className='link-icon'/>
-            <Link to="/browse" className='active'>Browse</Link>
-        </div>
         <div className='filter-sidebar'>
             <header className='filter-header'>
                 <h1 className='filter-title'>Filters</h1>
@@ -81,7 +60,7 @@ function Filters() {
                     const Icon = icons[item.icon];
                     return  (
                     <label 
-                        className={`category-item ${selected.includes(item.name) ? "active" : ""}`}
+                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
                         checked={selected.includes(item.name)} 
                         key={item.id}
                     >
@@ -90,7 +69,7 @@ function Filters() {
                             type='checkbox'
                             onChange={() => toggleCategory(item.name)}
                             />
-                        <span>{item.icon}</span>
+                        <span>{item.name}</span>
                     </label>
                     )})}
                 </div>
@@ -100,7 +79,7 @@ function Filters() {
                 <div className='categories'>
                     {topics.map((item) => (
                     <label 
-                        className={`category-item ${selected.includes(item.name) ? "active" : ""}`}
+                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
                         checked={selected.includes(item.name)} 
                         key={item.id}
                     >
@@ -118,7 +97,7 @@ function Filters() {
                 <div className='categories'>
                     {instructors.map((item) => (
                     <label 
-                        className={`category-item ${selected.includes(item.name) ? "active" : ""}`}
+                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
                         checked={selected.includes(item.name)} 
                         key={item.id}
                     >

@@ -1,0 +1,21 @@
+.bread-crumbs {
+    margin: 65px 0 30px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.bread-crumbs a {
+    font-size: 18px;
+    color: var(--gray500);
+    text-decoration: none;
+}
+.bread-crumbs .active {
+    color: var(--purple400);
+}
+.bread-crumbs-icon {
+    transform: rotateY(180deg);
+    width: 7px;
+}
+.bread-crumbs-icon * {
+    fill: var(--gray500) !important;
+}

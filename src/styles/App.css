@@ -58,6 +58,11 @@ section {
 .subtitle {
     font-size: 14px;
 }
+.small-text {
+    font-size: 16px;
+    color: var(--gray500);
+    line-height: 24px;
+}
 
 /* logo */
 .logo-holder {
@@ -112,6 +117,9 @@ section {
 }
 .btn-primary:hover {
     background: var(--purple600);
+}
+.small-btn {
+    font-size: 16px;
 }
 .btn-secondary {
     background: none;

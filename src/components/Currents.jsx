@@ -83,7 +83,7 @@ function Currents( {user, token, onLoginClick } ) {
                         <Lock/>
                     </div>
                     <p className='pop-up-title'>Sign in to track your learning progress</p>
-                    <button className='btn-primary' onClick={onLoginClick}>Log In</button>
+                    <button className='btn-primary small-btn' onClick={onLoginClick}>Log In</button>
                 </div>
             </div>
         ): 

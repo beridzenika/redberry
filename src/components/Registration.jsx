@@ -208,11 +208,11 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
             onSuccess(data.data.user, data.data.token);
         } catch (err) {
             if (err.errors) {
-                const mapped = {};
                 Object.keys(err.errors).forEach(field => {
-                    mapped[field] = err.errors[field][0];
+                    newErrors[field] = err.errors[field][0];
+                    newErrors.general = err.errors[field][0];
                 });
-            setError(mapped);
+            setError(newErrors);
             } else {
                 setError({ general: err.message || 'Something went wrong' });
             }

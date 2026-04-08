@@ -33,7 +33,6 @@ function App() {
     };
   }, [showLogin, showSignin, showProfile]);
 
-
   const handleLoginSuccess = (userData, userToken) => {
     if (userData) setUser(userData);
     if (userToken) setToken(userToken);
@@ -74,7 +73,6 @@ function App() {
             onLoginClick={() => setShowLogin(true)}
           />
         )}
-        <main className="container">
           <Switch>
             <Route exact path="/">
               <Dashboard 
@@ -90,7 +88,6 @@ function App() {
               <CoursePage/>
             </Route>
           </Switch>
-        </main>
         <Footer/>
       </div>
     </BrowserRouter>

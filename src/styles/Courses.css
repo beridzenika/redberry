@@ -57,13 +57,17 @@
 .course-main img {
     border-radius: 12px;
 }
-.course-img {
+.feature-img {
     width: 466px;
     height: 262px;
 }
 .current-img {
     max-width: 140px;
     height: 123px;
+}
+.catalogue-img {
+    width: 333px;
+    height: 181px;
 }
 .course-meta {
     display: flex;
@@ -73,6 +77,12 @@
 }
 .course-lecturer {
     color: var(--gray400);
+}
+.instructor {
+    color: var(--gray500);
+}
+.course-settings {
+    color: var(--gray300);
 }
 .course-rating {
     color: var(--gray600);
@@ -88,12 +98,15 @@
     font-size: 20px;
     margin-top: 9px;
 }
-.course-description .pop-up-text {
-    font-size: 16px;
-    color: var(--gray500);
+.course-description {
     max-width: 400px;
-    line-height: 24px;
 }
+
+.course-main .category-item {
+    background: var(--gray100);
+    max-width: fit-content;
+}
+
 
 .course-footer {
     display: flex;
@@ -105,6 +118,10 @@
     display: flex;
     align-items: center;
     gap: 8px;
+}
+.catalogue-cost {
+    flex-direction: column;
+    gap: 0;
 }
 .course-cost span {
     font-size: 12px;
@@ -158,5 +175,4 @@
 }
 .current-pop-up button {
     margin: 12px 0 0;
-    font-size: 16px;
 }
