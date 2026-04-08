@@ -76,7 +76,7 @@ function Currents( {user, token, onLoginClick } ) {
             <a href="#" className='courses-more-link'>See All</a>    
         </div>
         <div className="card-holder">
-        {!user && (
+        {!user ?  (
             <div className='current-blur'>
                 <div className='current-pop-up course-card'>
                     <div className='icon-holder lock'>
@@ -86,17 +86,16 @@ function Currents( {user, token, onLoginClick } ) {
                     <button className='btn-primary' onClick={onLoginClick}>Log In</button>
                 </div>
             </div>
+        ): 
+        courses.length === 0 && (
+            <>
+                <h3>You haven't enrolled in any courses yet. Start your learning journey today!</h3>
+                <button className='btn-primary'>Browse Courses</button>
+            </>
         )}
-        {error ? (
-            <span className="field-error">{error}</span>
-        ) : (
-            user && courses.length === 0 ? (
-                <>
-                    <h3>You haven't enrolled in any courses yet. Start your learning journey today!</h3>
-                    <button className='btn-primary'>Browse Courses</button>
-                </>
-            ) :
-            (courses.map((course) =>
+
+        {error && (<span className="field-error">{error}</span>)}
+        {(courses.map((course) =>
             <article className='course-card' key={course.id}>
                 <div className='course-main'>
                     <img src={`${course.course.image}`} alt="curse image" className='current-img'/>
@@ -118,7 +117,7 @@ function Currents( {user, token, onLoginClick } ) {
                     <button className='btn-secondary'>View</button>
                 </div>
             </article>
-            ))
+            )
         )}
         </div>
     </section>
