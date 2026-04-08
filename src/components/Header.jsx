@@ -3,25 +3,30 @@ import { ReactComponent as Browse } from '../assets/icons/Browse.svg';
 import { ReactComponent as Enroll } from '../assets/icons/Enroll.svg';
 import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Header.css'
+import { Link } from 'react-router-dom';
 
 function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
     return (
         <header className="header-navbar">
             <div className='container header-menu'>
-                <a className="logo-holder">
+                <Link to={'/'} className="logo-holder">
                     <Logo width={30} height={30} />
-                </a>
+                </Link>
 
                 <nav className='header-nav'>
                     <ul className='header-ul'>
-                        <li className='nav-item'>
-                            <Browse/>
-                            <span>Browse Curses</span>
+                        <li >
+                            <Link to={'/browse'} className='nav-item'>
+                                <Browse/>
+                                <span>Browse Curses</span>
+                            </Link>
                         </li>
                         {user && (
-                        <li className='nav-item'>
-                            <Enroll/>
-                            <span>Enrolled Curses</span>
+                        <li>
+                            <Link className='nav-item'>
+                                <Enroll/>
+                                <span>Enrolled Curses</span>
+                            </Link>
                         </li>
                         )}
                     </ul>

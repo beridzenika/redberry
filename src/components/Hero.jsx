@@ -3,6 +3,7 @@ import { ReactComponent as ArrowL } from '../assets/icons/ArrowL.svg';
 import '../styles/Hero.css';
 
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Hero() {
 
@@ -45,7 +46,7 @@ function Hero() {
 
   return (
     <section className='hero'>
-      <div className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
+      <Link to={'/browse'} className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
       {slides.map((slide, i) => (
         <div key={slide.id} className='hero-slide' style = {{ backgroundImage: `url(${slide.image})` }}>
             <div className='content'>
@@ -80,7 +81,7 @@ function Hero() {
             </div>
         </div>
       ))}
-      </div>
+      </Link>
     </section>
   )
 }

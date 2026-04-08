@@ -1,7 +1,8 @@
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
 import '../styles/Courses.css';
-import { getFeatured } from '../services/api';
+import { getData } from '../services/api';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Featured() {
     const [courses, setCourses] = useState([]);
@@ -9,7 +10,7 @@ function Featured() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-            const data = await getFeatured();
+            const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/featured`);
             setCourses(data.data);
             } catch (err) {
             setError(err.message);
@@ -18,6 +19,12 @@ function Featured() {
         fetchCourses();
     }, []);
 
+    const nav = useHistory();
+
+    const goToCourse = (id) => {  
+        nav.push(`/course/${id}`);
+    }
+    
     return (
     <section>
         <div className="header-box">
@@ -28,11 +35,9 @@ function Featured() {
                 </span>
             </header>   
         </div>
+        {error && (<span className="field-error">{error}</span>)}
         <div className="card-holder">
         {courses.map((course) => (
-            error ? (
-                <span className="field-error">{error}</span>
-            ) : (
             <article className='course-card featured' key={course.id}>
                 <div className='course-main featured'>
                     <img src={`${course.image}`} alt="curse image" className='course-img'/>
@@ -48,10 +53,9 @@ function Featured() {
                         <span>Starting from </span>
                         <span className='cost'>${parseInt(course.basePrice)}</span>
                     </div>
-                    <button className='btn-primary'>Details</button>
+                    <button className='btn-primary' onClick={() => goToCourse(course.id)}>Details</button>
                 </div>
             </article>
-            )
         ))}
         </div>
     </section>

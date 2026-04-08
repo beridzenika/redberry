@@ -73,8 +73,8 @@ export const updateProfile = async (profileData, token) => {
 }
 
 
-export const getFeatured = async () => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/featured`, {
+export const getData = async (url) => {
+  const res = await fetch(url, {
     method: 'GET',
     headers: {
       'accept': 'application/json',

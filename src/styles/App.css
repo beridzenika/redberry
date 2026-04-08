@@ -16,6 +16,7 @@
     --purple100: #DDDBFA;
     --purple200: #b7b3f4;
     --purple300: #958fef;
+    --purple400: #736BEA;
     --purple500: #4f46e5;
     --purple600: #281ED2;
     --purple800: #130E67;
@@ -37,6 +38,9 @@
     height: 100vh;
     display: grid;
     grid-template-rows: auto 1fr auto;
+}
+img {
+    object-fit: cover;
 }
 
 body {

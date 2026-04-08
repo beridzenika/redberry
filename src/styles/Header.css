@@ -19,13 +19,18 @@
     display: flex;
     gap: 8px;
 }
+.header-ul li {
+    padding: 15px;
+    list-style-type: none;
+}
 .nav-item {
     display: flex;
     align-items: center;
     gap: 8px;
     color: var(--gray600);
     font-size: 20px;
-    padding: 15px;
+    text-decoration: none;
+
 }
 .nav-item svg * {
     stroke: currentColor !important;
