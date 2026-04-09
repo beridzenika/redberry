@@ -5,7 +5,7 @@ import { ReactComponent as User } from '../assets/icons/User.svg';
 import '../styles/Header.css'
 import { Link } from 'react-router-dom';
 
-function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
+function Header( {user, onLoginClick, onSigninClick, onProfileClick, onEnrollClick} ) {
     return (
         <header className="header-navbar">
             <div className='container header-menu'>
@@ -23,10 +23,10 @@ function Header( {user, onLoginClick, onSigninClick, onProfileClick} ) {
                         </li>
                         {user && (
                         <li>
-                            <Link className='nav-item'>
+                            <div className='nav-item' onClick={onEnrollClick}>
                                 <Enroll/>
                                 <span>Enrolled Curses</span>
-                            </Link>
+                            </div>
                         </li>
                         )}
                     </ul>

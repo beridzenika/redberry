@@ -82,11 +82,6 @@ function Profile({ user, token, onSuccess, onClose }) {
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, []);
-    const handleOverlayClick = (e) => {
-        if (e.target.classList.contains('modal-backdrop')) {
-            handleClose();
-        }
-    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -118,7 +113,7 @@ function Profile({ user, token, onSuccess, onClose }) {
     };
 
     return (
-    <div className='modal-backdrop' onClick={handleClose}>
+    <div className='backdrop' onClick={handleClose}>
         <div className='modal profile-modal' onClick={(e) => e.stopPropagation()}>
             <button 
                 className='close-btn' 

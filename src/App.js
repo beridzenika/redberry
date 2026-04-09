@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
 import Registration from "./components/Registration";
+import Enrolled from "./components/Enrolled";
 
 import Dashboard from "./pages/Dashboard";
 import CoursePage from "./pages/CoursePage";
@@ -18,6 +19,8 @@ function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignin, setShowSignin] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [showEnrolled, setShowEnrolled] = useState(false);
+  
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   
@@ -50,15 +53,8 @@ function App() {
           onLoginClick={() => setShowLogin(true)}
           onSigninClick={() => setShowSignin(true)}
           onProfileClick={() => setShowProfile(true)}
+          onEnrollClick={() => setShowEnrolled(true)}
         />
-        {showProfile && (
-          <Profile
-            user={user}
-            token={token}
-            onSuccess={handleLoginSuccess}
-            onClose={() => setShowProfile(false)}
-          />
-        )}
         {showLogin && (
           <Login
             onSuccess={handleLoginSuccess}
@@ -73,6 +69,24 @@ function App() {
             onLoginClick={() => setShowLogin(true)}
           />
         )}
+        {showProfile && (
+          <Profile
+            user={user}
+            token={token}
+            onSuccess={handleLoginSuccess}
+            onClose={() => setShowProfile(false)}
+          />
+        )}
+        {showEnrolled && (
+          <Enrolled
+            onSuccess={handleLoginSuccess}
+            onClose={() => setShowEnrolled(false)}
+            user={user} 
+            token={token}
+          />
+        )}
+        
+
           <Switch>
             <Route exact path="/">
               <Dashboard 

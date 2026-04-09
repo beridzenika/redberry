@@ -222,8 +222,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
     };
 
     return (
-    <div className='modal-backdrop'>
-        
+    <div className='backdrop' onClick={onClose}>
         <div className='modal'>
             {step > 1 && (
                 <button className='back-btn' onClick={goBack}><Back/></button>
@@ -236,7 +235,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
                 </div>
                 <div className='pagination'>
                     {[...Array(3)].map((_, i) => (
-                        <span id={i} className={i+1 < step ? 'complete' : i+1 === step ? 'current' : ''} />
+                        <span key={i} className={i+1 < step ? 'complete' : i+1 === step ? 'current' : ''} />
                     ))}
                 </div>
                 <form onSubmit={handleSubmit}>

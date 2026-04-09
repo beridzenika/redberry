@@ -65,8 +65,8 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
     };
 
     return (
-    <div className='modal-backdrop'>
-        <div className='modal'>
+    <div className='backdrop'>
+        <div className='modal' onClick={onClose}>
             <button className='close-btn' onClick={onClose}><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>

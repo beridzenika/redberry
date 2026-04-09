@@ -1,0 +1,53 @@
+.enroll-backdrop {
+    justify-content: end !important;
+}
+.enroll-container {
+    background: var(--gray100);
+    height: 100vh;
+    width: 794px;
+    padding: 40px 72px;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+    animation-name: enterTrigger;
+    animation-fill-mode: forwards;
+}
+.enroll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    font-weight: 600;
+    color: var(--gray950);
+}
+.enroll-title {
+    font-size: 40px;
+}
+.total-enrolls {
+    font-size: 16px;
+}
+.enroll-card-holder {
+    grid-template-columns: 1fr !important;
+    padding: 30px 20px 0 10px;
+}
+.enroll-img {
+    min-width: 269px;
+    height: 191px;
+}
+.course-schedule li {
+    padding-top: 8px;
+}
+.course-schedule span {
+    font-weight: 400;
+    font-size: 14px;
+    color: var(--gray500);
+    padding: 8px;
+}
+.enroll-progress {
+    font-size: 16px;
+}
+
+.enroll-progress .progress-bar {
+    width: 442px;
+}
+.enroll-progress button {
+    padding: 35px 12px;
+}

@@ -145,6 +145,7 @@ function Catalogue( {icons, selected} ) {
         </div>
         <div className='catalogue-pagination'>
             <button 
+                style={{ transform: 'rotateY(180deg)' }}
                 className={`page-btn ${currentPage === 1  ? 'deactive' : ''}`}
                 onClick={() => handlePageArrows(currentPage-1)}
             >→</button>

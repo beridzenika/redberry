@@ -114,7 +114,7 @@ function Currents( {user, token, onLoginClick } ) {
                             <div className="progress-fill" style={{ width: `${course.progress}%` }} />
                         </div>
                     </div>
-                    <button className='btn-secondary'>View</button>
+                    <button className='btn-secondary progress-btn'>View</button>
                 </div>
             </article>
             )

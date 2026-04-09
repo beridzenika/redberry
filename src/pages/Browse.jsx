@@ -31,6 +31,7 @@ function Browse() {
           display: "grid",
           gridTemplateColumns: "309px auto",
           gap: "83px",
+          marginBottom: "120px",
         }}
       >
         <Filters icons={icons} selected={selected} setSelected={setSelected} />
