@@ -8,6 +8,8 @@ import { ReactComponent as design } from '../assets/icons/filters/design.svg';
 import { ReactComponent as development } from '../assets/icons/filters/development.svg';
 import { ReactComponent as marketing } from '../assets/icons/filters/marketing.svg';
 
+import { useState } from 'react';
+
 const icons = {
     'business': business,
     'data-science': dataScience,
@@ -17,6 +19,9 @@ const icons = {
 }
 
 function Browse() {
+
+  const [selected, setSelected] = useState({});
+
   return (
     <>  
       <BreadCrumbs/>
@@ -28,8 +33,8 @@ function Browse() {
           gap: "83px",
         }}
       >
-        <Filters icons={icons}/>
-        <Catalogue icons={icons}/>
+        <Filters icons={icons} selected={selected} setSelected={setSelected} />
+        <Catalogue icons={icons} selected={selected}/>
       </main>
     </>
   )

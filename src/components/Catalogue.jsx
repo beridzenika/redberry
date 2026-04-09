@@ -14,7 +14,7 @@ const sortOptions = [
   { value: 'title_asc',  label: 'Title: A-Z' },
 ];
 
-function Catalogue( {icons} ) {
+function Catalogue( {icons, selected} ) {
     const [courses, setCourses] = useState([]);
     const [meta, setMeta] = useState([]);
 
@@ -26,23 +26,43 @@ function Catalogue( {icons} ) {
     const [error, setError] = useState(null);
     useEffect(() => {
         const fetchCourses = async () => {
+            const baseUrl = 'https://api.redclass.redberryinternship.ge/api/courses?';
+            const filters = Object.entries(selected)
+                .flatMap(([section, values]) =>
+                values.length
+                    ? values.map((v) => `${section}%5B%5D=${encodeURIComponent(v)}`)
+                    : []
+                ).join('&');
             try {
-            const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses?sort=${sort}&page=${currentPage}`);
-            setCourses(data.data);
-            setMeta(data.meta);
+                const data = await getData(`${baseUrl}${filters ? filters + '&' : ''}sort=${sort}&page=${currentPage}`);
+                setCourses(data.data);
+                setMeta(data.meta);
             } catch (err) {
-            setError(err.message);
+                setError(err.message);
             }
         };
         fetchCourses();
-        console.log(sort);
-    }, [currentPage, sort]);
+    }, [currentPage, sort, selected]);
 
     const nav = useHistory();
     const goToCourse = (id) => {  
         nav.push(`/course/${id}`);
     }
     
+    
+    useEffect(() => {
+        const handler = (e) => {
+            if (!selectRef.current.contains(e.target)) setSelectIsOpen(false);
+        };
+        document.addEventListener('mousedown', handler);
+        return () => document.removeEventListener('mousedown', handler);
+    }, []);
+    const handleSelect = (value) => {
+        setSort(value);
+        setSelectIsOpen(false);
+    };
+
+
     const getPages = () => {
         const last = meta.lastPage;
         if (last <= 5) {
@@ -66,20 +86,6 @@ function Catalogue( {icons} ) {
     const handlePageArrows = (page) => {
         if (page >= 1 && page <= meta.lastPage) setCurrentPage(page);
     }
-
-
-    useEffect(() => {
-        const handler = (e) => {
-            if (!selectRef.current.contains(e.target)) setSelectIsOpen(false);
-        };
-        document.addEventListener('mousedown', handler);
-        return () => document.removeEventListener('mousedown', handler);
-    }, []);
-
-    const handleSelect = (value) => {
-        setSort(value);
-        setSelectIsOpen(false);
-    };
 
     return (
     <div className='catalogue-main'>
@@ -142,8 +148,9 @@ function Catalogue( {icons} ) {
                 className={`page-btn ${currentPage === 1  ? 'deactive' : ''}`}
                 onClick={() => handlePageArrows(currentPage-1)}
             >→</button>
-            {getPages().map((page) => (
+            {getPages().map((page, index) => (
                 <button 
+                    key={index}
                     className={`page-btn ${currentPage === page ? 'active' : ''}`}
                     onClick={() => handlePageChange(page)}
                 >{page}</button>

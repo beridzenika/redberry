@@ -5,8 +5,7 @@ import '../styles/Filters.css';
 import { useState, useEffect } from 'react';
 import { getData } from '../services/api';
 
-function Filters( {icons} ) {
-    const [selected, setSelected] = useState([]);
+function Filters( {icons, selected, setSelected} ) {
     const [categories, setCategories] = useState([]);
     const [topics, setTopics] = useState([]);
     const [instructors, setInstructors] = useState([]);
@@ -32,12 +31,19 @@ function Filters( {icons} ) {
         fetchFilters();
     }, []);
 
-    const toggleCategory = (item) => {
-        setSelected((prev) => 
-            prev.includes(item)
-            ? prev.filter((c) => c !== item)
-            : [...prev, item]
-        );
+    const toggleItem = (section, item) => {
+        setSelected((prev) => {
+            const currentSection = prev[section] || [];
+
+            const updatedSection = currentSection.includes(item)
+                ? currentSection.filter((c) => c !== item)
+                : [...currentSection, item];
+
+            return {
+            ...prev,
+                [section]: updatedSection,
+            };
+        });
     };
 
 
@@ -46,7 +52,7 @@ function Filters( {icons} ) {
         <div className='filter-sidebar'>
             <header className='filter-header'>
                 <h1 className='filter-title'>Filters</h1>
-                <button className='clear-btn' onClick={() => setSelected([])}>
+                <button className='clear-btn' onClick={() => setSelected({})}>
                     <span>Clear All Filters</span> 
                     <Close width={10}/>
                 </button>
@@ -60,14 +66,14 @@ function Filters( {icons} ) {
                     const Icon = icons[item.icon];
                     return  (
                     <label 
-                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
-                        checked={selected.includes(item.name)} 
+                        className={`category-item small-text ${selected['categories']?.includes(item.id) ? "active" : ""}`}
+                        checked={selected['categories']?.includes(item.id)} 
                         key={item.id}
                     >
                         <Icon className="icon" />
                         <input 
                             type='checkbox'
-                            onChange={() => toggleCategory(item.name)}
+                            onChange={() => toggleItem('categories', item.id)}
                             />
                         <span>{item.name}</span>
                     </label>
@@ -79,13 +85,13 @@ function Filters( {icons} ) {
                 <div className='categories'>
                     {topics.map((item) => (
                     <label 
-                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
-                        checked={selected.includes(item.name)} 
+                        className={`category-item small-text ${selected['topics']?.includes(item.id) ? "active" : ""}`}
+                        checked={selected['topics']?.includes(item.id)} 
                         key={item.id}
                     >
                         <input 
                             type='checkbox'
-                            onChange={() => toggleCategory(item.name)}
+                            onChange={() => toggleItem('topics', item.id)}
                             />
                         <span>{item.name}</span>
                     </label>
@@ -97,14 +103,14 @@ function Filters( {icons} ) {
                 <div className='categories'>
                     {instructors.map((item) => (
                     <label 
-                        className={`category-item small-text ${selected.includes(item.name) ? "active" : ""}`}
-                        checked={selected.includes(item.name)} 
+                        className={`category-item small-text ${selected['instructors']?.includes(item.id) ? "active" : ""}`}
+                        checked={selected['instructors']?.includes(item.id)} 
                         key={item.id}
                     >
                         <img src={`${item.avatar}`} alt="avatar" className='category-avatar'/>
                         <input 
                             type='checkbox'
-                            onChange={() => toggleCategory(item.name)}
+                            onChange={() => toggleItem('instructors', item.id)}
                             />
                         <span>{item.name}</span>
                     </label>
@@ -113,7 +119,7 @@ function Filters( {icons} ) {
             </div>
 
             <span className='active-filters'>
-                {selected.length} Filters Active
+                {Object.values(selected).reduce((sum, arr) => sum + arr.length, 0)} Filters Active
             </span>
         </div>
         
