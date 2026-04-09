@@ -221,7 +221,7 @@ function Profile({ user, token, onSuccess, onClose }) {
                                     </option>
                                 ))}
                                 </select>
-                                <SelectArrow className='input-icon'/>
+                                <SelectArrow className='select-icon'/>
                             </span>
                         </div>
                     </div>

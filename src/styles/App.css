@@ -46,6 +46,9 @@ img {
 body {
     background: var(--gray100);
 }
+li {
+    list-style-type: none;
+}
 
 /* basic classes */
 .container {
@@ -151,4 +154,10 @@ section {
 }
 .pagination .active{
     background-color: var(--gray100);
+}
+/* error message */
+.field-error {
+    font-size: 12px;
+    font-weight: 400px;
+    color: var(--error);
 }

@@ -236,7 +236,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
                 </div>
                 <div className='pagination'>
                     {[...Array(3)].map((_, i) => (
-                        <span className={i+1 < step ? 'complete' : i+1 === step ? 'current' : ''} />
+                        <span id={i} className={i+1 < step ? 'complete' : i+1 === step ? 'current' : ''} />
                     ))}
                 </div>
                 <form onSubmit={handleSubmit}>

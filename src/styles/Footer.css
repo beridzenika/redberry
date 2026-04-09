@@ -43,7 +43,6 @@ footer {
     font-weight: 400;
     font-size: 18px;
     color: var(--gray500);
-    list-style-type: none;
 }
 .nav-column span {
     padding-left: 6px;

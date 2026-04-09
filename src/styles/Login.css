@@ -72,7 +72,7 @@
 .profile-modal label {
     margin: 12px 0 5px;
 }
-input, select, .upload-input {
+input, .modal select, .upload-input {
     width: 100%;
     border-radius: 8px;
     border: 1.5px solid var(--gray200);
@@ -106,27 +106,25 @@ select {
     font-size: 14px;
 }
 
-.input-icon {
+.input-icon, .select-icon {
     position: absolute;
     right: 10px;
     height: 16px;
     top: calc(50% - 6px);
+    pointer-events: none;
 }
 
-.select-open .input-icon {
+.select-open .select-icon {
     transform: rotateX(180deg);
 }
 
-.label-error, .input-error, .field-error {
+.label-error, .input-error {
     color: var(--error);
 }
 .input-error {
     border-color: var(--error);
 }
-.field-error {
-    font-size: 12px;
-    font-weight: 400px;
-}
+
 .icon-error * {
     stroke: var(--error) !important;
 }
