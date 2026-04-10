@@ -9,12 +9,14 @@ function Dashboard( {user, token, onLoginClick, onEnrollClick} ) {
         <Hero/>
         {user ? (
           <>
-            <Currents 
-              user={user} 
-              token={token} 
-              onLoginClick={onLoginClick} 
-              onEnrollClick={onEnrollClick} 
-            />
+            {user.length !== 0 ? (
+              <Currents 
+                user={user} 
+                token={token} 
+                onLoginClick={onLoginClick} 
+                onEnrollClick={onEnrollClick} 
+              />
+            ) : ''}
             <Featured/>
           </>
         ) : (

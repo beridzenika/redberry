@@ -25,10 +25,12 @@ function CoursePage() {
     }, []);
 
     return (
-        <main className="container">
+        <>
             <BreadCrumbs/>
-            {course && <Course course={course} />}
-        </main>
+            <main className="container">
+                {course && <Course course={course} />}
+            </main>
+        </>
     );
 };
 

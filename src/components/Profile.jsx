@@ -20,9 +20,17 @@ function Profile({ user, token, onSuccess, onClose }) {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
+    const [completed, setCompleted] = useState([]);
     const clearFieldError = (field) => {
         setError(prev => ({ ...prev, [field]: undefined }));
     };
+
+    const addComplete = (value) => {
+        setCompleted((prev) =>
+            prev.includes(value) ? prev : [...prev, value]
+        );
+    };
+    
 
     const validate = () => {
         const newErrors = {};
@@ -33,6 +41,8 @@ function Profile({ user, token, onSuccess, onClose }) {
             newErrors.fullName = 'Name must be at least 3 characters';
         } else if (fullName.length > 50) {
             newErrors.fullName = 'Name must not exceed 50 characters';
+        } else {
+            addComplete('fullName');
         }
         const cleanPhone = mobileNumber.replaceAll(' ', '');
         if (cleanPhone.length === 0) {
@@ -43,6 +53,8 @@ function Profile({ user, token, onSuccess, onClose }) {
             newErrors.mobileNumber = 'Mobile number must be exactly 9 digits';
         } else if (cleanPhone[0] !== '5') {
             newErrors.mobileNumber = 'Georgian mobile numbers must start with 5';
+        } else {
+            addComplete('mobileNumber');
         }
 
         if (!age) {
@@ -154,7 +166,12 @@ function Profile({ user, token, onSuccess, onClose }) {
                                 if (error.fullName) clearFieldError('fullName');
                             }}
                         />
+                        {fullName === '' || error.fullName ? (
                         <Edit className='input-icon'/>
+                        ) : (
+                        <Complete className='input-icon'/>
+                        )}
+                        
                     </span>
                     
                     {error.fullName && <span className="field-error">{error.fullName}</span>}
@@ -189,7 +206,11 @@ function Profile({ user, token, onSuccess, onClose }) {
                                         if (error.mobileNumber) clearFieldError('mobileNumber');
                                     }}
                                 />
+                                {mobileNumber === '' || error.mobileNumber ? (
+                                <Edit className='input-icon'/>
+                                ) : (
                                 <Complete className='input-icon'/>
+                                )}
                             </span>
                         </div>
                         <div className='input-holder'>

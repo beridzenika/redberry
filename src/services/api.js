@@ -66,6 +66,11 @@ export const updateProfile = async (profileData, token) => {
   const data = await res.json();
 
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
     throw {message: data.message, errors: data.errors };
   }
   
@@ -100,6 +105,11 @@ export const getOutherisedData = async (token, url) => {
   const data = await res.json();
 
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
     throw { message: data.message || 'Failed to fetch'};
   }
   return data;

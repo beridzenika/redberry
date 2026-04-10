@@ -64,7 +64,8 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
         fetchCourses();
     }, [user]);
 
-    return (
+    if( user && courses.length === 0) return ''
+    else return (
     <section>
         <div className="header-box">
             <header className="section-header">
@@ -76,7 +77,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
             <a href="#" className='courses-more-link' onClick={onEnrollClick}>See All</a>    
         </div>
         <div className="card-holder">
-        {!user ?  (
+        { !user &&  (
             <div className='current-blur'>
                 <div className='current-pop-up course-card'>
                     <div className='icon-holder lock'>
@@ -86,12 +87,6 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
                     <button className='btn-primary small-btn' onClick={onLoginClick}>Log In</button>
                 </div>
             </div>
-        ): 
-        courses.length === 0 && (
-            <>
-                <h3>You haven't enrolled in any courses yet. Start your learning journey today!</h3>
-                <button className='btn-primary'>Browse Courses</button>
-            </>
         )}
 
         {error && (<span className="field-error">{error}</span>)}
