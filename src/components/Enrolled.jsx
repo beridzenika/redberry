@@ -55,7 +55,7 @@ function Enrolled( {user, onClose } ) {
     
     return (
     <div className='backdrop enroll-backdrop' onClick={onClose}>
-        <div className='enroll-container'>
+        <aside className='enroll-container'>
             <header className='enroll-header'>
                 <h2 className='enroll-title'>Enrolled Courses</h2>
                 <span className='total-enroll'>Total Enrollments 8</span>        
@@ -108,7 +108,7 @@ function Enrolled( {user, onClose } ) {
                 </article>
             ))}
             </div>
-        </div>
+        </aside>
     </div>
     );
 };
