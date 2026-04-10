@@ -9,6 +9,7 @@
     --gray500: #666666;
     --gray600: #525252;
     --gray700: #3d3d3d;
+    --gray800: #292929;
     --gray900: #141414;
     --gray950: #0A0A0A;
     
@@ -75,6 +76,12 @@ section {
     align-items: center;
     justify-content: center;
     z-index: 100;
+}
+
+.sidebar-page {
+    display: flex;
+    justify-content: space-between;
+    gap: 84px;
 }
 
 /* logo */

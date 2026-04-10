@@ -1,5 +1,6 @@
-import Course from '../components/Course';
 import BreadCrumbs from '../components/BreadCrumbs';
+import Course from '../components/Course';
+import Schedule from '../components/Schedule';
 
 import '../styles/CoursePage.css'
 import { getData } from '../services/api';
@@ -27,8 +28,9 @@ function CoursePage() {
     return (
         <>
             <BreadCrumbs/>
-            <main className="container">
+            <main className="container sidebar-page">
                 {course && <Course course={course} />}
+                <Schedule id={id}/>
             </main>
         </>
     );

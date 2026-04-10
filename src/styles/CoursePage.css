@@ -32,3 +32,40 @@
     font-size: 20px;
     color: var(--gray400);
 }
+
+
+.schedule-sidebar {
+    width: 530px;
+    margin-top: 60px;
+}
+.step-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+.step-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 24px;
+    color: var(--purple800);
+}
+.open-schedule * {
+    fill: var(--purple800) !important;
+}
+.schedule-box {
+    border: 1px solid var(--gray200) !important;
+    height: 91px;
+    color: var(--gray800) !important;
+}
+.schedule-box.locked {
+    background: var(--gray100);
+    color: var(--gray200);
+}
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}

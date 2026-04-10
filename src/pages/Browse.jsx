@@ -13,13 +13,7 @@ function Browse() {
     <>  
       <BreadCrumbs/>
       <main 
-        className="container"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "309px auto",
-          gap: "83px",
-          marginBottom: "120px",
-        }}
+        className="container sidebar-page"
       >
         <Filters selected={selected} setSelected={setSelected} />
         <Catalogue selected={selected}/>
