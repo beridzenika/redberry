@@ -15,7 +15,7 @@ function Profile({ user, token, onSuccess, onClose }) {
     const [age, setAge] = useState(user.age || '29');
     const [avatar, setAvatar] = useState(user.avatar || null);
 
-    const numbers = Array.from({ length: 120 - 16 + 1 }, (_, i) => i + 16);
+    const numbers = Array.from({ length: 130}, (_, i) => i + 1);
     const [selectIsOpen, setSelectIsOpen] = useState(false);
 
     const [loading, setLoading] = useState(false);
