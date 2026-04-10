@@ -106,6 +106,7 @@ function App() {
                 user={user} 
                 token={token} 
                 onLoginClick={() => setShowLogin(true)}
+                onEnrollClick={() => setShowEnrolled(true)}
               />
             </Route>
             <Route path="/Browse">

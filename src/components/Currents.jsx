@@ -45,7 +45,7 @@ const DUMMY_COURSES = [
     }
 ];
 
-function Currents( {user, token, onLoginClick } ) {
+function Currents( {user, token, onLoginClick, onEnrollClick } ) {
     const [courses, setCourses] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
@@ -73,7 +73,7 @@ function Currents( {user, token, onLoginClick } ) {
                     Pick up where you left
                 </span>
             </header>
-            <a href="#" className='courses-more-link'>See All</a>    
+            <a href="#" className='courses-more-link' onClick={onEnrollClick}>See All</a>    
         </div>
         <div className="card-holder">
         {!user ?  (

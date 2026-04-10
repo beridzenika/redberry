@@ -11,10 +11,10 @@ function Featured() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-            const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/featured`);
-            setCourses(data.data);
+                const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/featured`);
+                setCourses(data.data);
             } catch (err) {
-            setError(err.message);
+                setError(err.message);
             }
         };
         fetchCourses();
@@ -38,7 +38,7 @@ function Featured() {
         {error && (<span className="field-error">{error}</span>)}
         <div className="card-holder">
         {courses.map((course) => (
-            <article className='course-card featured' key={course.id}>
+            <article className='course-card featured' key={course.id} onClick={() => goToCourse(course.id)}>
                 <div className='course-main featured'>
                     <img src={`${course.image}`} alt="curse image" className='feature-img'/>
                     <div className="course-meta">
@@ -55,7 +55,7 @@ function Featured() {
                         <span>Starting from </span>
                         <span className='cost'>${parseInt(course.basePrice)}</span>
                     </div>
-                    <button className='btn-primary' onClick={() => goToCourse(course.id)}>Details</button>
+                    <button className='btn-primary'>Details</button>
                 </div>
             </article>
         ))}

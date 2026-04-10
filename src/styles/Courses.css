@@ -54,7 +54,7 @@
 .course-main.featured {
     flex-direction: column;
 }
-.course-main img {
+.course-main > img {
     border-radius: 12px;
 }
 .feature-img {
@@ -102,8 +102,8 @@
     max-width: 400px;
 }
 
-.course-main .category-item {
-    background: var(--gray100);
+.course-category-item {
+    background: var(--gray100) !important;
     max-width: fit-content;
 }
 

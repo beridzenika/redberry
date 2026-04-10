@@ -1,5 +1,7 @@
 import { ReactComponent as SelectArrow } from '../assets/icons/Select.svg';
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
+import { icons } from '../helpers/icons';
+
 import '../styles/Courses.css';
 import { getData } from '../services/api';
 
@@ -14,7 +16,7 @@ const sortOptions = [
   { value: 'title_asc',  label: 'Title: A-Z' },
 ];
 
-function Catalogue( {icons, selected} ) {
+function Catalogue( {selected} ) {
     const [courses, setCourses] = useState([]);
     const [meta, setMeta] = useState([]);
 
@@ -127,9 +129,9 @@ function Catalogue( {icons, selected} ) {
                         <span className="course-rating"><Star/><span>{course.avgRating}</span></span>
                     </div>
                     <h3 className='course-title'>{course.title}</h3>
-                    <div className='category-item small-text'>
+                    <div className='category-item course-category-item'>
                         <Icon className="icon" />
-                        {course.category.name}
+                        <span className='small-text'>{course.category.name}</span>
                     </div>
                 </div>
                 <div className='course-footer'>

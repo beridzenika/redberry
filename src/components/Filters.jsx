@@ -1,11 +1,12 @@
 import { ReactComponent as Close } from '../assets/icons/X.svg';
+import { icons } from '../helpers/icons';
 
 import '../styles/Filters.css';
 
 import { useState, useEffect } from 'react';
 import { getData } from '../services/api';
 
-function Filters( {icons, selected, setSelected} ) {
+function Filters( {selected, setSelected} ) {
     const [categories, setCategories] = useState([]);
     const [topics, setTopics] = useState([]);
     const [instructors, setInstructors] = useState([]);
