@@ -3,7 +3,7 @@
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
 import { ReactComponent as Lock } from '../assets/icons/Lock.svg';
 import '../styles/Courses.css';
-import { getInProgress } from '../services/api';
+import { getOutherisedData } from '../services/api';
 import { useState, useEffect } from 'react';
 
 const DUMMY_COURSES = [
@@ -55,7 +55,7 @@ function Currents( {user, token, onLoginClick } ) {
         }
         const fetchCourses = async () => {
             try {
-                const data = await getInProgress(token);
+                const data = await getOutherisedData(token, `https://api.redclass.redberryinternship.ge/api/courses/in-progress`);
                 setCourses(data.data);
             } catch (err) {
                 setError(err.message);

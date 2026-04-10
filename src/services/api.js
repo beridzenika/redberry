@@ -88,8 +88,8 @@ export const getData = async (url) => {
   }
   return data;
 };
-export const getInProgress = async (token) => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/in-progress`, {
+export const getOutherisedData = async (token, url) => {
+  const res = await fetch(url, {
     method: 'GET',
     headers: {
       'accept': 'application/json',
@@ -100,7 +100,7 @@ export const getInProgress = async (token) => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw { message: data.message || 'Failed to fetch featured courses'};
+    throw { message: data.message || 'Failed to fetch'};
   }
   return data;
 };

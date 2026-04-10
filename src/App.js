@@ -24,22 +24,36 @@ function App() {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
   
+  //if already logged in
   useEffect(() => {
-    if (showLogin || showSignin || showProfile) {
-        document.body.style.overflow = 'hidden';
-    } else {
-        document.body.style.overflow = '';
+    const savedToken = localStorage.getItem('token');
+    const savedUser = localStorage.getItem('user');
+    if(savedToken && savedUser) {
+      setToken(savedToken);
+      setUser(JSON.parse(savedUser));
     }
+  },[]);
 
+  // turning off scroll bar
+  useEffect(() => {
+    if (showLogin || showSignin || showProfile || showEnrolled) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
     return () => {
-        document.body.style.overflow = '';
+      document.body.style.overflow = '';
     };
-  }, [showLogin, showSignin, showProfile]);
+  }, [showLogin, showSignin, showProfile, showEnrolled]);
 
-  const handleLoginSuccess = (userData, userToken) => {
+
+  const handleSuccess = (userData, userToken) => {
     if (userData) setUser(userData);
     if (userToken) setToken(userToken);
-    
+
+    localStorage.setItem('token', userToken);
+    localStorage.setItem('user', JSON.stringify(userData));
+
     setShowLogin(false);
     setShowSignin(false);
     setShowProfile(false);
@@ -57,14 +71,14 @@ function App() {
         />
         {showLogin && (
           <Login
-            onSuccess={handleLoginSuccess}
+            onSuccess={handleSuccess}
             onClose={() => setShowLogin(false)}
             onSigninClick={() => setShowSignin(true)}
           />
         )}
         {showSignin && (
           <Registration
-            onSuccess={handleLoginSuccess}
+            onSuccess={handleSuccess}
             onClose={() => setShowSignin(false)}
             onLoginClick={() => setShowLogin(true)}
           />
@@ -73,13 +87,12 @@ function App() {
           <Profile
             user={user}
             token={token}
-            onSuccess={handleLoginSuccess}
+            onSuccess={handleSuccess}
             onClose={() => setShowProfile(false)}
           />
         )}
         {showEnrolled && (
           <Enrolled
-            onSuccess={handleLoginSuccess}
             onClose={() => setShowEnrolled(false)}
             user={user} 
             token={token}

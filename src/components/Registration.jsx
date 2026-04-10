@@ -223,7 +223,7 @@ function Registration({ onSuccess, onClose, onLoginClick }) {
 
     return (
     <div className='backdrop' onClick={onClose}>
-        <div className='modal'>
+        <div className='modal' onClick={(e) => e.stopPropagation()}>
             {step > 1 && (
                 <button className='back-btn' onClick={goBack}><Back/></button>
             )}

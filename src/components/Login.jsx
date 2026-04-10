@@ -65,8 +65,8 @@ function LogIn({ onSuccess, onClose, onSigninClick }) {
     };
 
     return (
-    <div className='backdrop'>
-        <div className='modal' onClick={onClose}>
+    <div className='backdrop' onClick={onClose}>
+        <div className='modal' onClick={(e) => e.stopPropagation()}>
             <button className='close-btn' onClick={onClose}><Close/></button>
             <div className='modal-content'>
                 <div className='modal-header'>

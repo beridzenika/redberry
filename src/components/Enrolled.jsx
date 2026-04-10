@@ -6,51 +6,168 @@ import { ReactComponent as Location } from '../assets/icons/schedule/Location.sv
 import '../styles/Enrolled.css'
 
 import { useState, useEffect } from 'react';
+import { getOutherisedData } from '../services/api';
 
-const DUMMY_COURSES = [
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    }
-]
-function Enrolled( {user, onClose } ) {
+// const DUMMY_COURSES = [
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+//     {   
+//         id: 0,
+//         progress: 65,
+//         course: {
+//             image: require('../assets/imgs/current.png'),
+//             title: "Advanced React & TypeScript Development",
+//             avgRating: 4.9,
+//             instructor: {
+//                 name: "Marilyn Mango",
+//             }
+//         },
+//         schedule: {
+//             weeklySchedule: {
+//                 label: "Monday - Wednestay"
+//             },
+//             timeSlot: {
+//                 label: "Evening (6:00 PM - 8:00 PM)"
+//             },
+//             sessionType: {
+//                 name: "online"
+//             },
+//             location: "Tbilisi, Chavchavadze St.30"
+//         }
+//     },
+// ]
+
+function Enrolled( {user, token, onClose } ) {
     const [courses, setCourses] = useState([]);
     const [error, setError] = useState(null);
     useEffect(() => {
-        setCourses(DUMMY_COURSES);
-        // if(!user) {
-        //     setCourses(DUMMY_COURSES);
-        //     return;
-        // }
-        // const fetchCourses = async () => {
-        //     try {
-        //         const data = await getInProgress(token);
-        //         setCourses(data.data);
-        //     } catch (err) {
-        //         setError(err.message);
-        //     }
-        // };
-        // fetchCourses();
+        const fetchCourses = async () => {
+            try {
+                const data = await getOutherisedData(token, 'https://api.redclass.redberryinternship.ge/api/enrollments');
+                setCourses(data.data);
+            } catch (err) {
+                setError(err.message);
+            }
+        };
+        fetchCourses();
     }, [user]);
     
     return (
@@ -58,14 +175,14 @@ function Enrolled( {user, onClose } ) {
         <aside className='enroll-container'>
             <header className='enroll-header'>
                 <h2 className='enroll-title'>Enrolled Courses</h2>
-                <span className='total-enroll'>Total Enrollments 8</span>        
+                <span className='total-enroll'>Total Enrollments {courses.length}</span>        
             </header>
             {error && (<span className="field-error">{error}</span>)}
             <div className="card-holder enroll-card-holder">
             {courses.map((course) => (
                 <article className='course-card' key={course.id}>
                     <div className='course-main'>
-                        <img src={`${course.image}`} alt="curse image" className='enroll-img'/>
+                        <img src={`${course.course.image}`} alt="curse image" className='enroll-img'/>
                         <div className="course-info">
                             <div className='course-header'>
                                 <div className="course-meta">
