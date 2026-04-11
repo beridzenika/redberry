@@ -50,8 +50,8 @@
 }
 .category-item.active {
     background: var(--purple50);
-    border: 1px solid var(--purple600);
-    color: var(--purple600);
+    border: 1px solid var(--purple600) !important;
+    color: var(--purple600) !important;
 }
 .category-item:hover .icon *, .category-item.active .icon * {
     fill: var(--purple600) !important;

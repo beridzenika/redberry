@@ -44,6 +44,9 @@
     align-items: center;
     margin-bottom: 18px;
 }
+.step-header.inactive .step-icon * {
+    stroke: var(--gray400) !important;
+}
 .step-title {
     display: flex;
     align-items: center;
@@ -52,20 +55,47 @@
     font-size: 24px;
     color: var(--purple800);
 }
+.step-header.inactive .step-title {
+    color: var(--gray400);
+}
+.step-header.inactive .open-schedule {
+    transform: rotateX(180deg);
+}
 .open-schedule * {
     fill: var(--purple800) !important;
 }
-.schedule-box {
+.step-header.inactive .open-schedule * {
+    fill: var(--gray400) !important;
+}
+.schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+.week-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+.schedule-btn {
     border: 1px solid var(--gray200) !important;
     height: 91px;
     color: var(--gray800) !important;
 }
-.schedule-box.locked {
-    background: var(--gray100);
-    color: var(--gray200);
+.locked {
+    background: var(--gray100) !important;
+    color: var(--gray200) !important; 
+    pointer-events: none;
 }
-.schedule-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
+.week-text {
+    font-weight: 600;
+    font-size: 16px;
+}
+.schedule-text {
+    color: var(--gray500);
+}
+.time-title {
+    font-size: 14px;
+}
+.time-text {
+    font-size: 10px;
 }
