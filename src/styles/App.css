@@ -138,6 +138,10 @@ section {
 .btn-primary:hover {
     background: var(--purple600);
 }
+.btn-primary.inactive {
+    background: var(--purple50);
+    color: var(--purple200);
+}
 .small-btn {
     font-size: 16px;
 }

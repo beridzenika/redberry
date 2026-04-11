@@ -29,8 +29,9 @@ function CoursePage() {
         <>
             <BreadCrumbs/>
             <main className="container sidebar-page">
+                {error && (<span className="field-error">{error}</span>)}
                 {course && <Course course={course} />}
-                <Schedule id={id}/>
+                <Schedule id={id} basePrice={course && parseInt(course.basePrice)}/>
             </main>
         </>
     );
