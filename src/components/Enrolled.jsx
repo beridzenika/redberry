@@ -7,154 +7,9 @@ import { ReactComponent as Location } from '../assets/icons/schedule/Location.sv
 import '../styles/Enrolled.css'
 
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { getOutherisedData } from '../services/api';
 
-const DUMMY_COURSES = [
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-    {   
-        id: 0,
-        progress: 65,
-        course: {
-            image: require('../assets/imgs/current.png'),
-            title: "Advanced React & TypeScript Development",
-            avgRating: 4.9,
-            instructor: {
-                name: "Marilyn Mango",
-            }
-        },
-        schedule: {
-            weeklySchedule: {
-                label: "Monday - Wednestay"
-            },
-            timeSlot: {
-                label: "Evening (6:00 PM - 8:00 PM)"
-            },
-            sessionType: {
-                name: "online"
-            },
-            location: "Tbilisi, Chavchavadze St.30"
-        }
-    },
-]
 
 function Enrolled( {user, token, onClose } ) {
     const [courses, setCourses] = useState([]);
@@ -163,13 +18,18 @@ function Enrolled( {user, token, onClose } ) {
         const fetchCourses = async () => {
             try {
                 const data = await getOutherisedData(token, 'https://api.redclass.redberryinternship.ge/api/enrollments');
-                setCourses(DUMMY_COURSES);
+                setCourses(data.data);
             } catch (err) {
                 setError(err.message);
             }
         };
         fetchCourses();
     }, [user]);
+
+    const nav = useHistory();
+    const goToCourse = (id) => {  
+        nav.push(`/course/${id}`);
+    }
     
     return (
     <div className='backdrop enroll-backdrop' onClick={onClose}>
@@ -192,7 +52,7 @@ function Enrolled( {user, token, onClose } ) {
                 </div>
             ) : 
             courses.map((course) => (
-                <article className='course-card' key={course.id}>
+                <article className='course-card' key={course.id} onClick={() => goToCourse(course.course.id)}>
                     <div className='course-main'>
                         <img src={`${course.course.image}`} alt="curse image" className='enroll-img'/>
                         <div className="course-info">

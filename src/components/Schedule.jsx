@@ -1,8 +1,13 @@
 import { ReactComponent as First } from '../assets/icons/steps/1.svg';
 import { ReactComponent as Second } from '../assets/icons/steps/2.svg';
 import { ReactComponent as Third } from '../assets/icons/steps/3.svg';
+import { ReactComponent as FirstStretched } from '../assets/icons/steps/1S.svg';
+import { ReactComponent as SecondStretched } from '../assets/icons/steps/2S.svg';
+import { ReactComponent as ThirdStretched } from '../assets/icons/steps/3S.svg';
+
 import { ReactComponent as Open } from '../assets/icons/Select.svg';
 import { ReactComponent as Warning } from '../assets/icons/Warning.svg';
+import { ReactComponent as Arrow } from '../assets/icons/Arrow.svg';
 import { ReactComponent as Location } from '../assets/icons/schedule/Location.svg';
 
 import { ReactComponent as Morning } from '../assets/icons/schedule/Morning.svg';
@@ -15,7 +20,6 @@ import { ReactComponent as Hybrid } from '../assets/icons/schedule/Hybrid.svg';
 
 import { useState, useEffect } from 'react';
 import { getData } from '../services/api';
-import { type } from '@testing-library/user-event/dist/type';
 
 const DUMMY_WEEK = [
     {
@@ -86,7 +90,7 @@ const DUMMY_TYPE = [
 ]
 
 
-function Schedule({ id, basePrice }) {
+function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
     const [selectedWeek, setSelectedWeek] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
@@ -96,7 +100,7 @@ function Schedule({ id, basePrice }) {
     const [types, setTypes] = useState([]);
 
     const [error, setError] = useState(null);
-    const [activeSteps, setActiveSteps] = useState([]);
+    const [activeSteps, setActiveSteps] = useState([1]);
     const [sessionPrice, setSessionPrice] = useState(0);
 
     useEffect(() => {
@@ -158,17 +162,28 @@ function Schedule({ id, basePrice }) {
                         [...prev, step]);
     };
     
+    const handleEnrollClick = () => {
+        if (warningContainer) warningContainer.onClick();
+        else {
+            const matchedType = types.find((t) => t.id === selectedType);
+            onEnrollNow(matchedType.courseScheduleId);
+        }
+    }
     
     return (
         <aside className="schedule-sidebar">
             <div className="shcedule-container">
                 <div className="schedule-step">
                     <div 
-                        className={`step-header ${activeSteps.includes(1) ? '' : 'inactive'}`} 
+                        className={`step-header ${activeSteps.includes(1) ? '' : (selectedWeek ? 'shrinked' :'inactive')}`} 
                         onClick={() => handleToggle(1)}
                     >
                         <div className='step-title'>
-                            <First className='step-icon'/>
+                            {!activeSteps.includes(1) && selectedWeek ? (
+                                <FirstStretched className='step-icon'/>
+                            ): (
+                                <First className='step-icon'/>
+                            )}
                             <h3>Weekly Schedule</h3>
                         </div>
                         <Open 
@@ -198,11 +213,15 @@ function Schedule({ id, basePrice }) {
                 </div>
                 <div className="schedule-step">
                     <div 
-                        className={`step-header ${activeSteps.includes(2) ? '' : 'inactive'}`} 
+                        className={`step-header ${activeSteps.includes(2) ? '' : (selectedTime ? 'shrinked' :'inactive')}`} 
                         onClick={() => handleToggle(2)}
                     >
                         <div className='step-title'>
-                            <Second className='step-icon'/>
+                            {!activeSteps.includes(2) && selectedTime ? (
+                                <SecondStretched className='step-icon'/>
+                            ): (
+                                <Second className='step-icon'/>
+                            )}
                             <h3>Time Slot</h3>
                         </div>
                         <Open 
@@ -227,7 +246,7 @@ function Schedule({ id, basePrice }) {
                                     matchedTime ? "" : "locked"
                                 } ${selectedTime === time.id ? "active" : ""}`}
                                 onClick={() => handleTimeSelect(time.id)}
-                                disabled={!matchedTime} // optional but recommended
+                                disabled={!matchedTime}
                                 >
                                 <Icon className="schedule-icon" />
 
@@ -242,11 +261,15 @@ function Schedule({ id, basePrice }) {
                 </div>
                 <div className="schedule-step">
                     <div 
-                        className={`step-header ${activeSteps.includes(3) ? '' : 'inactive'}`} 
+                        className={`step-header ${activeSteps.includes(3) ? '' : (selectedType ? 'shrinked' :'inactive')}`} 
                         onClick={() => handleToggle(3)}
                     >
                         <div className='step-title'>
-                            <Third className='step-icon'/>
+                            {!activeSteps.includes(3) && selectedType ? (
+                                <ThirdStretched className='step-icon'/>
+                            ): (
+                                <Third className='step-icon'/>
+                            )}
                             <h3>Session Type</h3>
                         </div>
                         <Open 
@@ -258,14 +281,16 @@ function Schedule({ id, basePrice }) {
                     <div className='schedule-grid schedule-type' style={{ display: activeSteps.includes(3) ? 'grid' : 'none' }}>
                         {DUMMY_TYPE.map((type) => {
                             const Icon = type.icon;
-                            const matched = types.find((t) => t.id === type.id);
+                            const matchedType = types.find((t) => t.id === type.id);
                             return (
                                 <button 
                                     key={type.id} 
-                                    className={`category-item schedule-btn ${types.some(t => t.id === type.id) ? '' : 'locked'} ${selectedType === type.id ? 'active' : ''}`}
+                                    className={`category-item schedule-btn 
+                                              ${matchedType ? (matchedType.availableSeats !== 0 ? '' : 'locked') : 'locked'} 
+                                              ${selectedType === type.id ? 'active' : ''}`}
                                     onClick={() => {
                                         setSelectedType(type.id);
-                                        setSessionPrice(matched.priceModifier);
+                                        setSessionPrice(parseInt(matchedType.priceModifier));
                                     }}
                                 >
                                     <Icon className='schedule-icon'/>
@@ -274,10 +299,10 @@ function Schedule({ id, basePrice }) {
                                             {type.name}
                                         </div>
                                         <span className='schedule-location'>
-                                            {matched?.location ? (
+                                            {matchedType?.location ? (
                                             <>
                                                 <Location/>
-                                                <span>{matched.location}</span>
+                                                <span>{matchedType.location}</span>
                                             </>
                                             ) : (
                                                 <span>Google Meet</span>
@@ -286,7 +311,7 @@ function Schedule({ id, basePrice }) {
                                         <div className='price-modifier'>
                                             {type.priceModifier !== 0 ? (
                                             <>
-                                                <span>+ ${parseInt(matched ? matched.priceModifier : type.priceModifier)}</span>
+                                                <span>+ ${parseInt(matchedType ? matchedType.priceModifier : type.priceModifier)}</span>
                                             </>
                                             ) : (
                                                 <span>Included</span>
@@ -297,26 +322,26 @@ function Schedule({ id, basePrice }) {
                                 </button>
                         )})}
                         {DUMMY_TYPE.map((type) => {
-                            const matched = types.find((t) => t.id === type.id);
+                            const matchedType = types.find((t) => t.id === type.id);
                             return (
                                 <span
                                     key={type.id}
                                     className={`available-seats ${
-                                        matched?.availableSeats < 5 &&
-                                        matched?.availableSeats !== 0
+                                        matchedType?.availableSeats < 5 &&
+                                        matchedType?.availableSeats !== 0
                                             ? "warning"
                                             : ""
                                     }`}
                                 >
-                                    {!matched || matched.availableSeats === 0 ? (
+                                    {!matchedType || matchedType.availableSeats === 0 ? (
                                     "No Seats Available"
-                                    ) : matched.availableSeats < 5 ? (
+                                    ) : matchedType.availableSeats < 5 ? (
                                     <>
                                         <Warning className="icon" />
-                                        {` Only ${matched.availableSeats} seats remaining`}
+                                        {` Only ${matchedType.availableSeats} seats remaining`}
                                     </>
                                     ) : (
-                                    `${matched.availableSeats} seats available`
+                                    `${matchedType.availableSeats} seats available`
                                     )}
                                 </span>
                         )})}
@@ -339,8 +364,27 @@ function Schedule({ id, basePrice }) {
                     <div className='price-title'>Session Price</div>
                     <span className='price'>+ ${sessionPrice}</span>
                 </div>
-                <button className='btn-primary inactive'>Enroll Now</button>
+                <button 
+                    className={`btn-primary ${selectedType ? '' : 'inactive'}`}
+                    onClick={selectedType && handleEnrollClick}
+                >Enroll Now</button>
             </div>
+
+            {warningContainer && (
+            <div className='warning-container'>
+                <div className="warning-text">
+                    <div className="warning-header">
+                        <Warning width={19} height={17}/>
+                        <div className="warning-title">{warningContainer.title}</div>
+                    </div>
+                    <div className="warning-subtitle">{warningContainer.subtitle}</div>
+                </div>
+                <button className='warning-btn' onClick={warningContainer.onClick}>
+                    {warningContainer.buttonText}
+                    <Arrow/>
+                </button>
+            </div>
+            )}
         </aside>
     )
 };

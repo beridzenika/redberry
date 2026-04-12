@@ -228,3 +228,37 @@ select {
     color: var(--gray900);
     text-decoration: underline;
 }
+
+.pop-up {
+    width: 476px;
+    height: 495px;
+    padding: 60px;
+    border-radius: 16px;
+    background-color: var(--gray50);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.pop-up-header {
+    text-align: center;
+}
+
+.pop-up-title {
+    margin: 24px 0;
+    font-weight: 600;
+    font-size: 32px;
+    color: var(--gray700);
+}
+.pop-up-subtitle {
+    font-size: 20px;
+    color: var(--gray700);
+}
+.pop-up-footer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+.pop-up-footer button {
+    padding: 17px;
+    font-size: 16px;
+}

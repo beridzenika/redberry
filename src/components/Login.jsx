@@ -2,7 +2,7 @@ import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as PassEye } from '../assets/icons/PassEye.svg';
 import { ReactComponent as ClosedEye } from '../assets/icons/ClosedEye.svg';
 
-import '../styles/Login.css';
+import '../styles/Modals.css';
 import { loginUser } from '../services/api';
 
 import { useState } from 'react';

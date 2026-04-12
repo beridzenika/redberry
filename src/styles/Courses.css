@@ -69,6 +69,10 @@
     width: 333px;
     height: 181px;
 }
+.course-info {
+    width: 100%;
+}
+
 .course-meta {
     display: flex;
     justify-content: space-between;

@@ -113,7 +113,12 @@ function App() {
               <Browse/>
             </Route>
             <Route path="/course/:id">
-              <CoursePage/>
+              <CoursePage
+                user={user} 
+                token={token}
+                onLoginClick={() => setShowLogin(true)}
+                onEnrollClick={() => setShowProfile(true)}
+              />
             </Route>
           </Switch>
         <Footer/>

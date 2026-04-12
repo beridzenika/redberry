@@ -114,3 +114,22 @@ export const getOutherisedData = async (token, url) => {
   }
   return data;
 };
+
+export const postEnroll = async (courseId, courseScheduleId, force, token) => {
+  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/enrollments`, {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({ courseId, courseScheduleId, force }),
+  });
+
+  const data = await res.json();
+  console.log(data);
+  if (!res.ok) {
+    throw { ...data, status: res.status };
+  }
+  return data;
+};

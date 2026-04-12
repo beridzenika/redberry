@@ -3,7 +3,7 @@ import { ReactComponent as User } from '../assets/icons/User.svg';
 import { ReactComponent as Complete } from '../assets/icons/V.svg';
 import { ReactComponent as Edit } from '../assets/icons/Edit.svg';
 import { ReactComponent as SelectArrow } from '../assets/icons/Select.svg';
-import '../styles/Login.css'
+import '../styles/Modals.css'
 import FileUpload from './FileUpload';
 
 import { useState, useEffect } from 'react';

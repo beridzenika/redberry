@@ -121,7 +121,7 @@ function Catalogue( {selected} ) {
         {courses.map((course) => {
             const Icon = icons[course.category.icon];
             return (
-            <article className='course-card featured' key={course.id}>
+            <article className='course-card featured' key={course.id} onClick={() => goToCourse(course.id)}>
                 <div className='course-main featured'>
                     <img src={`${course.image}`} alt="curse image" className='catalogue-img'/>
                     <div className="course-meta">
@@ -139,7 +139,7 @@ function Catalogue( {selected} ) {
                         <span>Starting from </span>
                         <span className='cost'>${parseInt(course.basePrice)}</span>
                     </div>
-                    <button className='btn-primary small-btn' onClick={() => goToCourse(course.id)}>Details</button>
+                    <button className='btn-primary small-btn'>Details</button>
                 </div>
             </article>
             )}

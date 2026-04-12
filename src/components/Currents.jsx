@@ -3,8 +3,10 @@
 import { ReactComponent as Star } from '../assets/icons/Star.svg';
 import { ReactComponent as Lock } from '../assets/icons/Lock.svg';
 import '../styles/Courses.css';
+
 import { getOutherisedData } from '../services/api';
 import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 const DUMMY_COURSES = [
     {   
@@ -64,6 +66,11 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
         fetchCourses();
     }, [user]);
 
+    const nav = useHistory();
+    const goToCourse = (id) => {  
+        nav.push(`/course/${id}`);
+    }
+
     if( user && courses.length === 0) return ''
     else return (
     <section>
@@ -91,7 +98,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
 
         {error && (<span className="field-error">{error}</span>)}
         {(courses.map((course) =>
-            <article className='course-card' key={course.id}>
+            <article className='course-card' key={course.id} onClick={() => goToCourse(course.course.id)}>
                 <div className='course-main'>
                     <img src={`${course.course.image}`} alt="curse image" className='current-img'/>
                     <div className="course-info">

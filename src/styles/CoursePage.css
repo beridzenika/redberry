@@ -37,6 +37,7 @@
 .schedule-sidebar {
     width: 530px;
     margin-top: 60px;
+    margin-bottom: 300px;
 }
 .step-header {
     display: flex;
@@ -58,7 +59,7 @@
 .step-header.inactive .step-title {
     color: var(--gray400);
 }
-.step-header.inactive .open-schedule {
+.step-header.inactive .open-schedule, .step-header.shrinked .open-schedule {
     transform: rotateX(180deg);
 }
 .open-schedule * {
@@ -173,7 +174,45 @@
     font-size: 32px;
     font-weight: 600;
 }
-.price-holder button {
+.summary button {
     width: 100%;
     margin-top: 32px;
+}
+
+.warning-container {
+    margin-top: 11px;
+    background: #F8FAFC;
+    border: 1px solid #E5E7EB;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.warning-text {
+    width: 351px;
+}
+.warning-header {
+    font-size: 16px;
+    color: var(--gray800);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 9px;
+}
+.warning-subtitle {
+    font-size: 12px;
+    color: var(--gray400);
+}
+.warning-btn {
+    background: var(--purple50);
+    border: 1px solid var(--purple200);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    color: var(--purple600);
+    font-size: 14px;
+    font-weight: 400;
 }
