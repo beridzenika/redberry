@@ -172,7 +172,7 @@ function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
     
     return (
         <aside className="schedule-sidebar">
-            <div className="shcedule-container">
+            <div>
                 <div className="schedule-step">
                     <div 
                         className={`step-header ${activeSteps.includes(1) ? '' : (selectedWeek ? 'shrinked' :'inactive')}`} 

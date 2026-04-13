@@ -1,4 +1,6 @@
 import { ReactComponent as Icon } from '../assets/icons/Congratulations.svg';
+import { ReactComponent as Star } from '../assets/icons/Star.svg';
+
 
 function CompleteCourse({onClose, course}) {
 
