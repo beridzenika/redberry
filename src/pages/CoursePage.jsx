@@ -102,7 +102,7 @@ function CoursePage({onLoginClick, onEnrollClick}) {
                     onClose={() => setShowSuccess(false)}
                 />
             )}
-            <BreadCrumbs/>
+            {course && <BreadCrumbs category={course.category.name}/>}
             {error && (<span className="field-error">{error}</span>)}
             <main className="container sidebar-page">
                 {course && <Course course={course} />}
