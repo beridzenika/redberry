@@ -10,7 +10,13 @@ function SuccessEnroll({course, onClose}) {
                     <div className='pop-up-subtitle'>You've successfully enrolled to the “{course}” Course!</div>
                 </div>
                 <div className="pop-up-footer" style={{gridTemplateColumns: "1fr"}}>
-                    <button className="btn-primary" onClick={onClose}>Done</button>
+                    <button 
+                        className="btn-primary" 
+                        onClick={() => {
+                            onClose();
+                            window.location.reload();
+                        }
+                    }>Done</button>
                 </div>
             </div>
         </div>

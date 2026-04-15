@@ -11,8 +11,14 @@
     background: none;
     border: none;
 }
-.close-btn { right: 20px; }
-.back-btn { left: 20px; }
+.close-btn { 
+    right: 20px; 
+    top: 20px; 
+}
+.back-btn { 
+    left: 20px; 
+    top: 20px; 
+}
 
 .modal-header {
     text-align: center;
@@ -261,4 +267,41 @@ select {
 .pop-up-footer button {
     padding: 17px;
     font-size: 16px;
+}
+
+.rate-modal {
+    width: 100%;
+    padding: 40px 50px;
+    margin: 40px auto;
+}
+.rate-modal .rate-text {
+    color: var(--gray600);
+}
+.rate-modal .star-empty * {
+    fill: none;
+    stroke: var(--gray200);
+}
+
+.rate {
+    text-align: center;
+}
+.rate-text {
+    font-size: 16px;
+    color: var(--purple400);
+    margin: 18px;
+}
+.star-container {
+    display: flex;
+    gap: 18px;
+    justify-content: center;
+    margin-bottom: 32px;
+}
+
+.star {
+    width: 46px;
+    height: 46px;
+}
+
+.star-filled * {
+    fill: var(--warning);
 }

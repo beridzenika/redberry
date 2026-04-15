@@ -114,8 +114,6 @@ function App() {
             </Route>
             <Route path="/course/:id">
               <CoursePage
-                user={user} 
-                token={token}
                 onLoginClick={() => setShowLogin(true)}
                 onEnrollClick={() => setShowProfile(true)}
               />

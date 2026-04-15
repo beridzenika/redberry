@@ -127,9 +127,55 @@ export const postEnroll = async (courseId, courseScheduleId, force, token) => {
   });
 
   const data = await res.json();
-  console.log(data);
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
     throw { ...data, status: res.status };
+  }
+  return data;
+};
+
+export const completeCourse = async (courseId, token) => {
+  const res = await fetch (`https://api.redclass.redberryinternship.ge/api/enrollments/${courseId}/complete`, {
+    method: 'PATCH',
+    headers: {
+      'accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    }
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
+    throw {message: data.message, errors: data.errors };
+  }
+  return data;
+}
+
+export const postReview = async (courseId, rating, token) => {
+  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/${courseId}/reviews`, {
+    method: 'POST',
+    headers: {
+      'accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({rating}),
+  });
+  const data = await res.json();
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
+    throw {message: data.message, errors: data.errors };
   }
   return data;
 };

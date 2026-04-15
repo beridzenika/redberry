@@ -6,7 +6,7 @@ import ScheduleEnrolled from '../components/ScheduleEnrolled';
 import EnrollConflict from '../components/EnrollConflict';
 import ProfileRedirect from '../components/ProfileRedirect';
 import SuccessEnroll from '../components/SuccessEnroll';
-import CompleteCourse from '../components/CompleteCourse';
+
 
 import '../styles/CoursePage.css'
 import { getOutherisedData, postEnroll } from '../services/api';
@@ -15,8 +15,10 @@ import { useState, useEffect } from 'react';
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 
 
-function CoursePage({user, token, onLoginClick, onEnrollClick}) {
+function CoursePage({onLoginClick, onEnrollClick}) {
     const id = useParams().id;
+    const user = JSON.parse(localStorage.getItem('user'));
+    const token = localStorage.getItem('token');
 
     const [course, setCourse] = useState(null);
     const [error, setError] = useState(null);
@@ -26,7 +28,6 @@ function CoursePage({user, token, onLoginClick, onEnrollClick}) {
     const [showConflicts, setShowConflicts] = useState(false);
     const [showRedirect, setShowRedirect] = useState(false);
     const [showSuccess, setShowSuccess] = useState(false);
-    const [showComplete, setShowComplete ] = useState(false);
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -41,7 +42,6 @@ function CoursePage({user, token, onLoginClick, onEnrollClick}) {
     }, []);
 
     const EnrollCourse = async (scheduleId, force) => {
-        console.log(scheduleId, force, token)
         try {
             const data = await postEnroll(id, scheduleId, force, token);
             setMessage(data.data.course.title);
@@ -102,20 +102,16 @@ function CoursePage({user, token, onLoginClick, onEnrollClick}) {
                     onClose={() => setShowSuccess(false)}
                 />
             )}
-            {/* {setShowComplete && (
-                <CompleteCourse
-                    course={message}
-                    onClose={() => setShowComplete(false)}
-                />
-            )} */}
             <BreadCrumbs/>
             {error && (<span className="field-error">{error}</span>)}
             <main className="container sidebar-page">
                 {course && <Course course={course} />}
-                
                 {course && course.enrollment ? (
                     <ScheduleEnrolled
                         enrollment={course.enrollment}
+                        token={token}
+                        id={id}
+                        rate={course?.reviews?.find(r => r.userId === user.id)?.rating || 0}
                     />
                 ): (
                     <Schedule 
