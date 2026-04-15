@@ -8,7 +8,7 @@ import { ReactComponent as Close } from '../assets/icons/X.svg';
 import { ReactComponent as Star } from '../assets/icons/RateStar.svg';
 
 
-import { completeCourse, postReview } from '../services/api';
+import { completeCourse, postReview, deleteCourse } from '../services/api';
 import CompleteCourse from '../components/CompleteCourse';
 import { useState } from 'react';
 
@@ -34,7 +34,12 @@ function ScheduleEnrolled({enrollment, token, id, rate}) {
     }
 
     const handleRetake = async () => {
-        console.log('retake');
+        try {
+            const data = await deleteCourse(enrollment.id, token);
+            console.log(data);
+        } catch (err) {
+            setError(err.message);
+        }
     }
 
     const handleRate = async (star) => {

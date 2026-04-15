@@ -98,7 +98,7 @@ export const getOutherisedData = async (token, url) => {
     method: 'GET',
     headers: {
       'accept': 'application/json',
-       'Authorization': `Bearer ${token}`,
+      'Authorization': `Bearer ${token}`,
     },
   });
 
@@ -179,3 +179,24 @@ export const postReview = async (courseId, rating, token) => {
   }
   return data;
 };
+
+export const deleteCourse = async (courseId, token) => {
+  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/enrollments/${courseId}`, {
+    method: 'DELETE',
+    headers: {
+      'accept': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  });
+  const data = await res.json();
+
+  if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      window.location.reload();
+    }
+    throw { message: data.message || 'Failed to delete'};
+  }
+  return data;
+}
