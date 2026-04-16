@@ -109,6 +109,7 @@ select {
     height: 16px;
     top: calc(50% - 6px);
     pointer-events: none;
+    z-index: 2000;
 }
 
 .select-open .select-icon {
