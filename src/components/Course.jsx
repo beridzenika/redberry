@@ -15,7 +15,7 @@ function Course({course}) {
     return (
         <div className='course-page-holder course-main'>
             <h1 className='course-title course-page-title'>{course.title}</h1>
-            <img src={`${course.image}`} alt="curse image" className='course-page-img course-img'/>
+            <img src={`${course.image}`} alt={`${course.title}`} className='course-page-img course-img'/>
             <div className="course-meta">
                 <div className='meta-holder course-schedule'>
                     <ul>

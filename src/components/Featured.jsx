@@ -40,7 +40,7 @@ function Featured() {
         {courses.map((course) => (
             <article className='course-card featured' key={course.id} onClick={() => goToCourse(course.id)}>
                 <div className='course-main featured'>
-                    <img src={`${course.image}`} alt="curse image" className='feature-img'/>
+                    <img src={`${course.image}`} alt={`${course.title}`} className='feature-img'/>
                     <div className="course-meta">
                         <span className="course-lecturer">
                             lecturer <span className='instructor'>{course.instructor.name}</span>
