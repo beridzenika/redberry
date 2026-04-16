@@ -64,7 +64,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
             }
         };
         fetchCourses();
-    }, [user]);
+    }, [user, token]);
 
     const nav = useHistory();
     const goToCourse = (id) => {  
@@ -100,7 +100,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
         {(courses.map((course) =>
             <article className='course-card' key={course.id} onClick={() => goToCourse(course.course.id)}>
                 <div className='course-main'>
-                    <img src={`${course.course.image}`} alt={`${course.title}`} className='current-img'/>
+                    <img src={course.course.image} alt={course.course.title} className='current-img'/>
                     <div className="course-info">
                         <div className="course-meta">
                             <span className="course-lecturer">Lecturer {course.course.instructor.name}</span>

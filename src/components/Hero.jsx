@@ -2,29 +2,13 @@ import { ReactComponent as ArrowR } from '../assets/icons/ArrowR.svg';
 import { ReactComponent as ArrowL } from '../assets/icons/ArrowL.svg';
 import '../styles/Hero.css';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Hero() {
 
   const [current, setCurrent] = useState(0);
   const timeRef = useRef(null);
-
-  const startTimer = () => {
-    clearInterval(timeRef.current);
-    timeRef.current = setInterval(() => {
-      setCurrent(prev => (prev+1)% slides.length);
-    }, 4000);
-  }
-  useEffect(() => {
-    startTimer();
-    return () => clearInterval(timeRef.current);
-  }, []);
-
-  const go = (dir) => {
-    startTimer();
-    setCurrent(prev => (prev + dir + slides.length) % slides.length);
-  };
 
   const slides = [
     { id: 1, 
@@ -44,9 +28,26 @@ function Hero() {
     },
   ];
 
+  const startTimer = useCallback(() => {
+    clearInterval(timeRef.current);
+    timeRef.current = setInterval(() => {
+      setCurrent(prev => (prev+1)% slides.length);
+    }, 4000);
+  }, [slides.length]);
+
+  useEffect(() => {
+    startTimer();
+    return () => clearInterval(timeRef.current);
+  }, [startTimer]);
+
+  const go = (dir) => {
+    startTimer();
+    setCurrent(prev => (prev + dir + slides.length) % slides.length);
+  };
+
   return (
     <section className='hero'>
-      <Link to={'/browse'} className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
+      <div className='hero-track' style={{ transform: `translateX(-${current * 100}%)` }}>
       {slides.map((slide, i) => (
         <div key={slide.id} className='hero-slide' style = {{ backgroundImage: `url(${slide.image})` }}>
             <div className='content'>
@@ -81,7 +82,7 @@ function Hero() {
             </div>
         </div>
       ))}
-      </Link>
+      </div>
     </section>
   )
 }

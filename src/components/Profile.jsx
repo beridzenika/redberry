@@ -6,7 +6,7 @@ import { ReactComponent as SelectArrow } from '../assets/icons/Select.svg';
 import '../styles/Modals.css'
 import FileUpload from './FileUpload';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback} from 'react';
 import { updateProfile } from '../services/api';
 
 function Profile({ user, token, onSuccess, onClose }) {
@@ -20,19 +20,19 @@ function Profile({ user, token, onSuccess, onClose }) {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState({});
-    const [completed, setCompleted] = useState([]);
+    const [, setCompleted] = useState([]);
     const clearFieldError = (field) => {
         setError(prev => ({ ...prev, [field]: undefined }));
     };
 
-    const addComplete = (value) => {
+    const addComplete = useCallback((value) => {
         setCompleted((prev) =>
             prev.includes(value) ? prev : [...prev, value]
         );
-    };
+    }, []);
     
 
-    const validate = () => {
+    const validate = useCallback(() => {
         const newErrors = {};
 
         if (!fullName) {
@@ -74,9 +74,9 @@ function Profile({ user, token, onSuccess, onClose }) {
 
         setError({});
         return true;
-    };
+    }, [fullName, mobileNumber, age, addComplete]);
 
-    const handleClose = () => {
+    const handleClose = useCallback(() => {
         if (!validate()) {
             const confirmClose = window.confirm(
                 "Your profile is incomplete. You won't be able to enroll in courses until you complete it.\n\nClose anyway?"
@@ -84,7 +84,7 @@ function Profile({ user, token, onSuccess, onClose }) {
             if (!confirmClose) return;
         }
         onClose();
-    };
+    }, [validate, onClose]);
     useEffect(() => {
         const handleKeyDown = (e) => {
             if (e.key === 'Escape') {
@@ -93,7 +93,7 @@ function Profile({ user, token, onSuccess, onClose }) {
         };
         document.addEventListener('keydown', handleKeyDown);
         return () => document.removeEventListener('keydown', handleKeyDown);
-    }, []);
+    }, [handleClose]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
