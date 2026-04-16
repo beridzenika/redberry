@@ -39,7 +39,7 @@ export const registerUser = async ({ email, password, password_confirmation, use
   const data = await res.json();
 
   if (!res.ok) {
-    throw { message: data.message, errors: data.errors };
+    const err = new Error(data.message); err.errors = data.errors; throw err;
   }
   return data;
 };
@@ -72,9 +72,9 @@ export const updateProfile = async (profileData, token) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw {message: data.message, errors: data.errors };
+    const err = new Error(data.message); err.errors = data.errors; throw err;
   }
-  
+
   return data;
 }
 
@@ -90,7 +90,7 @@ export const getData = async (url) => {
   const data = await res.json();
 
   if (!res.ok) {
-    throw { message: data.message || 'Failed to fetch featured courses'};
+    throw new Error(data.message || 'Failed to fetch featured courses');
   }
   return data;
 };
@@ -111,7 +111,7 @@ export const getOutherisedData = async (token, url) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw { message: data.message || 'Failed to fetch'};
+    throw new Error(data.message || 'Failed to fetch');
   }
   return data;
 };
@@ -134,7 +134,7 @@ export const postEnroll = async (courseId, courseScheduleId, force, token) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw { ...data, status: res.status };
+    const err = new Error(data.message); Object.assign(err, data); err.status = res.status; throw err;
   }
   return data;
 };
@@ -154,7 +154,7 @@ export const completeCourse = async (courseId, token) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw {message: data.message, errors: data.errors };
+    const err = new Error(data.message); err.errors = data.errors; throw err;
   }
   return data;
 }
@@ -176,7 +176,7 @@ export const postReview = async (courseId, rating, token) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw {message: data.message, errors: data.errors };
+    const err = new Error(data.message); err.errors = data.errors; throw err;
   }
   return data;
 };
@@ -200,7 +200,7 @@ export const deleteCourse = async (courseId, token) => {
       localStorage.removeItem('user');
       window.location.reload();
     }
-    throw { message: data.message || 'Failed to delete'};
+    throw new Error(data.message || 'Failed to delete');
   }
   return data;
 }

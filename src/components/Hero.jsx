@@ -2,7 +2,7 @@ import { ReactComponent as ArrowR } from '../assets/icons/ArrowR.svg';
 import { ReactComponent as ArrowL } from '../assets/icons/ArrowL.svg';
 import '../styles/Hero.css';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Hero() {
@@ -10,39 +10,40 @@ function Hero() {
   const [current, setCurrent] = useState(0);
   const timeRef = useRef(null);
 
-  const startTimer = () => {
+  const slides = [
+    { id: 1,
+      image: require('../assets/imgs/hero1.png'),
+      title: 'Start leaning something new today',
+      subtitle: 'Explore a wide range of expert-led courses in design, development, business, and more. Find the skills you need to grow your career and learn at your own pace.'
+    },
+    { id: 2,
+      image: require('../assets/imgs/hero2.png'),
+      title: 'Pick up where you left off',
+      subtitle: 'Your learning journey is already in progress. Continue your enrolled courses, track your progress, and stay on track toward completing your goals.'
+    },
+    { id: 3,
+      image: require('../assets/imgs/hero3.png'),
+      title: 'Learn together, grow faster',
+      subtitle: ''
+    },
+  ];
+
+  const startTimer = useCallback(() => {
     clearInterval(timeRef.current);
     timeRef.current = setInterval(() => {
       setCurrent(prev => (prev+1)% slides.length);
     }, 4000);
-  }
+  }, [slides.length]);
+
   useEffect(() => {
     startTimer();
     return () => clearInterval(timeRef.current);
-  }, []);
+  }, [startTimer]);
 
   const go = (dir) => {
     startTimer();
     setCurrent(prev => (prev + dir + slides.length) % slides.length);
   };
-
-  const slides = [
-    { id: 1, 
-      image: require('../assets/imgs/hero1.png'), 
-      title: 'Start leaning something new today', 
-      subtitle: 'Explore a wide range of expert-led courses in design, development, business, and more. Find the skills you need to grow your career and learn at your own pace.' 
-    },
-    { id: 2, 
-      image: require('../assets/imgs/hero2.png'), 
-      title: 'Pick up where you left off', 
-      subtitle: 'Your learning journey is already in progress. Continue your enrolled courses, track your progress, and stay on track toward completing your goals.' 
-    },
-    { id: 3, 
-      image: require('../assets/imgs/hero3.png'), 
-      title: 'Learn together, grow faster', 
-      subtitle: '' 
-    },
-  ];
 
   return (
     <section className='hero'>
