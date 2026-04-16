@@ -69,8 +69,8 @@ function Footer({user, onLoginClick, onSigninClick, onProfileClick, onEnrollClic
                 </small>
                 <span className='legit'>
                     All Rights Reserved | 
-                    <a> Terms and Conditions </a>| 
-                    <a> Privacy Policy </a>
+                    <span> Terms and Conditions </span>| 
+                    <span> Privacy Policy </span>
                 </span>
             </div>
         </div>

@@ -3,7 +3,6 @@ import { ReactComponent as ArrowL } from '../assets/icons/ArrowL.svg';
 import '../styles/Hero.css';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Link } from 'react-router-dom/cjs/react-router-dom.min';
 
 function Hero() {
 
