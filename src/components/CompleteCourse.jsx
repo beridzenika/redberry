@@ -48,7 +48,7 @@ function CompleteCourse({onClose, course, token, id}) {
                     </div>
                 </div>
                 <div className="pop-up-footer" style={{gridTemplateColumns: "1fr"}}>
-                    <button className="btn-primary" onClick={onClose}>Done</button>
+                    <button className="btn-primary" onClick={() => {onClose(); window.location.reload()}}>Done</button>
                 </div>
             </div>
         </div>

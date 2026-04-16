@@ -106,7 +106,7 @@ function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
     useEffect(() => {
         const fetchFilters = async () => {
             try {
-                const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/${id}/weekly-schedules`);
+                const data = await getData(`courses/${id}/weekly-schedules`);
                 setWeekly(data.data);
             } catch (err) {
                 setError(err.message);
@@ -123,7 +123,7 @@ function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
         setTypes([]);
 
         try {
-            const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/${id}/time-slots?weekly_schedule_id=${weekId}`)
+            const data = await getData(`courses/${id}/time-slots?weekly_schedule_id=${weekId}`)
             setTimes(data.data);
             setActiveSteps((prev) => prev.filter((step) => step <= 2));
             setActiveSteps((prev) => [...prev, 2]);
@@ -138,7 +138,7 @@ function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
     setTypes([]);
 
         try {
-            const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/${id}/session-types?weekly_schedule_id=${selectedWeek}&time_slot_id=${timeId}`);
+            const data = await getData(`courses/${id}/session-types?weekly_schedule_id=${selectedWeek}&time_slot_id=${timeId}`);
             setTypes(data.data);
             setActiveSteps((prev) => prev.filter((step) => step <= 3));
             setActiveSteps((prev) => [...prev, 3]);

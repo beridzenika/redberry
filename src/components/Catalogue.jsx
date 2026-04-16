@@ -28,7 +28,7 @@ function Catalogue( {selected} ) {
     const [error, setError] = useState(null);
     useEffect(() => {
         const fetchCourses = async () => {
-            const baseUrl = 'https://api.redclass.redberryinternship.ge/api/courses?';
+            const baseUrl = 'courses?';
             const filters = Object.entries(selected)
                 .flatMap(([section, values]) =>
                 values.length

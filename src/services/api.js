@@ -1,6 +1,7 @@
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const loginUser = async (email, password) => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/login`, {
+  const res = await fetch(`${baseUrl}/login`, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -27,7 +28,7 @@ export const registerUser = async ({ email, password, password_confirmation, use
     formData.append('avatar', avatar);
   }
 
-  const res = await fetch('https://api.redclass.redberryinternship.ge/api/register', {
+  const res = await fetch(`${baseUrl}/register`, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -54,7 +55,7 @@ export const updateProfile = async (profileData, token) => {
   }
 
 
-  const res = await fetch ('https://api.redclass.redberryinternship.ge/api/profile', {
+  const res = await fetch (`${baseUrl}/profile`, {
     method: 'PUT',
     headers: {
       'accept': 'application/json',
@@ -79,7 +80,7 @@ export const updateProfile = async (profileData, token) => {
 
 
 export const getData = async (url) => {
-  const res = await fetch(url, {
+  const res = await fetch(`${baseUrl}/${url}`, {
     method: 'GET',
     headers: {
       'accept': 'application/json',
@@ -94,7 +95,7 @@ export const getData = async (url) => {
   return data;
 };
 export const getOutherisedData = async (token, url) => {
-  const res = await fetch(url, {
+  const res = await fetch(`${baseUrl}/${url}`, {
     method: 'GET',
     headers: {
       'accept': 'application/json',
@@ -116,7 +117,7 @@ export const getOutherisedData = async (token, url) => {
 };
 
 export const postEnroll = async (courseId, courseScheduleId, force, token) => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/enrollments`, {
+  const res = await fetch(`${baseUrl}/enrollments`, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -139,7 +140,7 @@ export const postEnroll = async (courseId, courseScheduleId, force, token) => {
 };
 
 export const completeCourse = async (courseId, token) => {
-  const res = await fetch (`https://api.redclass.redberryinternship.ge/api/enrollments/${courseId}/complete`, {
+  const res = await fetch (`${baseUrl}/enrollments/${courseId}/complete`, {
     method: 'PATCH',
     headers: {
       'accept': 'application/json',
@@ -159,7 +160,7 @@ export const completeCourse = async (courseId, token) => {
 }
 
 export const postReview = async (courseId, rating, token) => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/courses/${courseId}/reviews`, {
+  const res = await fetch(`${baseUrl}/courses/${courseId}/reviews`, {
     method: 'POST',
     headers: {
       'accept': 'application/json',
@@ -181,15 +182,18 @@ export const postReview = async (courseId, rating, token) => {
 };
 
 export const deleteCourse = async (courseId, token) => {
-  const res = await fetch(`https://api.redclass.redberryinternship.ge/api/enrollments/${courseId}`, {
+  const res = await fetch(`${baseUrl}/enrollments/${courseId}`, {
     method: 'DELETE',
     headers: {
       'accept': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   });
-  const data = await res.json();
+  if (res.status === 204 || res.headers.get('content-length') === '0') {
+    return null;
+  }
 
+  const data = await res.json();
   if (!res.ok) {
     if (res.status === 401) {
       localStorage.removeItem('token');

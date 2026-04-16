@@ -11,7 +11,7 @@ function Featured() {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const data = await getData(`https://api.redclass.redberryinternship.ge/api/courses/featured`);
+                const data = await getData(`courses/featured`);
                 setCourses(data.data);
             } catch (err) {
                 setError(err.message);

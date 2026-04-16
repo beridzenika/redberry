@@ -17,9 +17,9 @@ function Filters( {selected, setSelected} ) {
             try {
             const [categoriesRes, topicsRes, instructorsRes] = 
                 await Promise.all ([
-                    getData(`https://api.redclass.redberryinternship.ge/api/categories`),
-                    getData(`https://api.redclass.redberryinternship.ge/api/topics`),
-                    getData(`https://api.redclass.redberryinternship.ge/api/instructors`),
+                    getData(`categories`),
+                    getData(`topics`),
+                    getData(`instructors`),
                     
                 ])
                 setCategories(categoriesRes.data);

@@ -35,8 +35,8 @@ function ScheduleEnrolled({enrollment, token, id, rate}) {
 
     const handleRetake = async () => {
         try {
-            const data = await deleteCourse(enrollment.id, token);
-            console.log(data);
+            await deleteCourse(enrollment.id, token);
+            window.location.reload();
         } catch (err) {
             setError(err.message);
         }

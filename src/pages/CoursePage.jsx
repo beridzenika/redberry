@@ -32,7 +32,7 @@ function CoursePage({onLoginClick, onEnrollClick}) {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const data = await getOutherisedData(token, `https://api.redclass.redberryinternship.ge/api/courses/${id}`);
+                const data = await getOutherisedData(token, `courses/${id}`);
                 setCourse(data.data);
             } catch (err) {
                 setError(err.message);

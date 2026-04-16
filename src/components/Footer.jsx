@@ -10,17 +10,18 @@ import { ReactComponent as LinkdIn } from '../assets/icons/social-media/LinkedIn
 import { ReactComponent as YouTube } from '../assets/icons/social-media/YouTube.svg';
 
 import '../styles/Footer.css';
+import { Link } from 'react-router-dom';
 
-function Footer() {
+function Footer({user, onLoginClick, onSigninClick, onProfileClick, onEnrollClick}) {
   return (
     <footer>
         <div className="container">
             <div className="footer-row">
                 <div className="menu">
                     <div className="logo">
-                        <a className="logo-holder">
+                        <Link to={'/'} className="logo-holder">
                             <Logo width={19} height={19} />
-                        </a>
+                        </Link>
                         <span>Bootcamp</span>
                     </div>
                     <p className="subtitle">
@@ -38,14 +39,18 @@ function Footer() {
                     <div className='nav-column'>
                         <h4>Explore</h4>
                         <ul>
-                            <li>Enrolled Curses</li>
-                            <li>Browse Curses</li>
+                            <li onClick={onEnrollClick}>Enrolled Curses</li>
+                            <li> 
+                                <Link to={'/browse'} className='nav-item'>
+                                    Browse Curses
+                                </Link>
+                            </li>
                         </ul>
                     </div>
                     <div className='nav-column'>
                         <h4>Account</h4>
                         <ul>
-                            <li>My Profile</li>
+                            <li onClick={user ? onProfileClick : undefined}>My Profile</li>
                         </ul>
                     </div>
                     <div className='nav-column'>

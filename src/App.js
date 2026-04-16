@@ -119,7 +119,13 @@ function App() {
               />
             </Route>
           </Switch>
-        <Footer/>
+        <Footer
+          user={user}
+          onLoginClick={() => setShowLogin(true)}
+          onSigninClick={() => setShowSignin(true)}
+          onProfileClick={() => setShowProfile(true)}
+          onEnrollClick={() => setShowEnrolled(true)}
+        />
       </div>
     </BrowserRouter>
   );

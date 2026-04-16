@@ -57,7 +57,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
         }
         const fetchCourses = async () => {
             try {
-                const data = await getOutherisedData(token, `https://api.redclass.redberryinternship.ge/api/courses/in-progress`);
+                const data = await getOutherisedData(token, `courses/in-progress`);
                 setCourses(data.data);
             } catch (err) {
                 setError(err.message);
@@ -81,7 +81,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
                     Pick up where you left
                 </span>
             </header>
-            <a href="#" className='courses-more-link' onClick={onEnrollClick}>See All</a>    
+            <div className='courses-more-link' onClick={user ? onEnrollClick : undefined}>See All</div>    
         </div>
         <div className="card-holder">
         { !user &&  (
@@ -90,7 +90,7 @@ function Currents( {user, token, onLoginClick, onEnrollClick } ) {
                     <div className='icon-holder lock'>
                         <Lock/>
                     </div>
-                    <p className='pop-up-title'>Sign in to track your learning progress</p>
+                    <p>Sign in to track your learning progress</p>
                     <button className='btn-primary small-btn' onClick={onLoginClick}>Log In</button>
                 </div>
             </div>

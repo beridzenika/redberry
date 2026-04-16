@@ -17,7 +17,7 @@ function Enrolled( {user, token, onClose } ) {
     useEffect(() => {
         const fetchCourses = async () => {
             try {
-                const data = await getOutherisedData(token, 'https://api.redclass.redberryinternship.ge/api/enrollments');
+                const data = await getOutherisedData(token, 'enrollments');
                 setCourses(data.data);
             } catch (err) {
                 setError(err.message);
