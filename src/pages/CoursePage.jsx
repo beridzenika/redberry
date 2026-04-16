@@ -39,7 +39,7 @@ function CoursePage({onLoginClick, onEnrollClick}) {
             }
         };
         fetchCourses();
-    }, []);
+    }, [id, token]);
 
     const EnrollCourse = async (scheduleId, force) => {
         try {

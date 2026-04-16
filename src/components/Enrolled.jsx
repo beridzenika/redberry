@@ -24,7 +24,7 @@ function Enrolled( {user, token, onClose } ) {
             }
         };
         fetchCourses();
-    }, [user]);
+    }, [user, token]);
 
     const nav = useHistory();
     const goToCourse = (id) => {  
@@ -54,7 +54,7 @@ function Enrolled( {user, token, onClose } ) {
             courses.map((course) => (
                 <article className='course-card' key={course.id} onClick={() => goToCourse(course.course.id)}>
                     <div className='course-main'>
-                        <img src={`${course.course.image}`} alt="curse image" className='enroll-img'/>
+                        <img src={`${course.course.image}`} alt={course.course.title} className='enroll-img'/>
                         <div className="course-info">
                             <div className='course-header'>
                                 <div className="course-meta">

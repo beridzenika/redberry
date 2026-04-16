@@ -123,7 +123,7 @@ function Catalogue( {selected} ) {
             return (
             <article className='course-card featured' key={course.id} onClick={() => goToCourse(course.id)}>
                 <div className='course-main featured'>
-                    <img src={`${course.image}`} alt="curse image" className='catalogue-img'/>
+                    <img src={`${course.image}`} alt={course.title} className='catalogue-img'/>
                     <div className="course-meta">
                         <span className="course-settings">{course.instructor.name} | {course.durationWeeks} Weeks</span>
                         <span className="course-rating"><Star/><span>{course.avgRating}</span></span>

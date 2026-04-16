@@ -113,7 +113,7 @@ function Schedule({ id, basePrice, warningContainer, onEnrollNow }) {
             }
         };
         fetchFilters();
-    }, []);
+    }, [id]);
 
     const handleWeekSelect = async (weekId) => {
         setSelectedWeek(weekId);
