@@ -108,7 +108,6 @@ select {
     right: 10px;
     height: 16px;
     top: calc(50% - 6px);
-    pointer-events: none;
     z-index: 2000;
 }
 
